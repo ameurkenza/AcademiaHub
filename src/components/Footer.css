@@ -1,0 +1,49 @@
+/* components/Footer/Footer.css */
+.footer-container {
+    display: flex;
+    justify-content: center; /* Centre horizontalement */
+    align-items: center; /* Centre verticalement */
+    padding: 1.5rem 3rem;
+    background-color: #000;
+    border-top: 2px solid #FFD700;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000;
+    text-align: center; /* Ajouté pour le centrage */
+  }
+  
+  .footer-content {
+    display: flex;
+    flex-direction: column; /* Empile les éléments verticalement */
+    gap: 0.8rem; /* Espace entre les éléments */
+  }
+  
+  .footer-content span {
+    color: #FFD700;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+  }
+  
+  .github-link {
+    color: #FFD700;
+    text-decoration: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 20px;
+    border: 2px solid #FFD700;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-top: 0.5rem; /* Espace supplémentaire au-dessus du lien */
+    display: inline-block; /* Permet de conserver le padding */
+  }
+  
+  .github-link:hover {
+    background-color: #FFD700;
+    color: #000;
+    transform: translateY(-2px);
+  }
+  
+  body {
+    margin-bottom: 120px; /* Augmenté pour accommoder les 2 lignes */
+  }

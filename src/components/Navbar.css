@@ -1,0 +1,80 @@
+/* components/Header/Navbar.css */
+.navbar-container {
+  width: 100%; /* Prend toute la largeur */
+  max-width: 100vw;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1rem;
+  background-color: #000;
+  position: relative;
+  min-height: 70px; /* Hauteur minimale augmentée */
+  
+}
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+
+.nav-section {
+  display: flex;
+  gap: 1rem;
+  flex: 1;
+}
+
+.left {
+  justify-content: flex-start;
+}
+
+.right {
+  justify-content: flex-end;
+}
+
+.nav-button {
+  color: #FFD700;
+  text-decoration: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  border: 2px solid #FFD700;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.nav-button:hover {
+  background-color: #FFD700;
+  color: #000;
+}
+
+.logo-link {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px; /* Fixe un espace constant pour éviter les décalages */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* Modification clé ici : pas de bordure */
+.navbar-logo {
+  height: 90px; /* Taille gardée */
+  width: auto;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 1.5); /* Animation plus dynamique */
+  border-radius: 8px; /* Léger arrondi optionnel */
+}
+
+/* Effet au survol sans rotation (si tu veux garder un effet simple) */
+.navbar-logo:hover {
+  /* Remplacer par */
+  transform: scale(1.3); /* Zoom augmenté à 130% */
+  filter: drop-shadow(0 0 12px #FFD700); /* Optionnel : ajoute une lueur dorée */
+}
+.right {
+  justify-content: flex-end;
+  margin-right: 30px; /* Ajoute un espace à droite */
+  min-width: 200px;
+}
