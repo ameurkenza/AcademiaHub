@@ -1,0 +1,56 @@
+.departments-page {
+  padding: 2rem;
+  background: #D4AF37; /* Fond doré */
+}
+
+.page-title {
+  color: #000; /* Titre en noir */
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.columns-container {
+  display: flex;
+  gap: 2rem;
+  min-height: 70vh;
+}
+
+/* Colonnes en noir */
+.department-column,
+.subject-column {
+  flex: 1;
+  background: #1a1a1a; /* Noir */
+  border: 2px solid #FFD700;
+  border-radius: 10px;
+  padding: 1.5rem;
+}
+
+/* Titre des colonnes en doré */
+.column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  color: #FFD700; /* Texte en doré */
+}
+
+.create-button {
+  background: #000;
+  color: #FFD700;
+  border: 2px solid #FFD700;
+  border-radius: 20px;
+  padding: 0.5rem 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.create-button:hover {
+  background: #FFD700;
+  color: #000;
+}
+
+.list-container {
+  color: #FFD700; /* Texte en doré */
+  height: 500px; /* Hauteur fixe pour l'espace liste */
+  overflow-y: auto; /* Scroll si contenu trop long */
+}
