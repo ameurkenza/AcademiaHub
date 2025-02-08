@@ -9,7 +9,8 @@ import Home from './pages/Home';
 import DepartementsMatieres from './pages/DepartementsMatieres';
 import UtilisateursRoles from './pages/UtilisateursRoles';
 import LaboratoiresEquipements from './pages/LaboratoiresEquipements';
-
+import LaboratoireDetail from './pages/LaboratoireDetail';
+import EquipementDetail from './pages/EquipementDetail';
 function App() {
   return (
     <>
@@ -19,6 +20,8 @@ function App() {
         <Route path="/departements-matieres" element={<DepartementsMatieres />} />
         <Route path="/utilisateurs-roles" element={<UtilisateursRoles />} />
         <Route path="/laboratoires-equipements" element={<LaboratoiresEquipements />} />
+        <Route path="/laboratoire/:id" element={<LaboratoireDetail />} />
+        <Route path="/equipement/:id" element={<EquipementDetail />} />
     </Routes>
     <Footer />
     </>
