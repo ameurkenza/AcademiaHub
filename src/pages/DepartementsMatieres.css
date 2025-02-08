@@ -54,3 +54,93 @@
   height: 500px; /* Hauteur fixe pour l'espace liste */
   overflow-y: auto; /* Scroll si contenu trop long */
 }
+
+/* ✅ Ajout du style pour la liste déroulante */
+.department-item {
+  list-style: none;
+  padding: 10px;
+  border-bottom: 1px solid #FFD700;
+}
+
+.department-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px;
+  background: #333;
+  color: #FFD700;
+  border-radius: 5px;
+}
+
+.toggle-button {
+  background: none;
+  border: none;
+  color: #FFD700;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.department-details {
+  background: #222;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 5px;
+}
+
+.user-list {
+  padding-left: 20px;
+}
+
+.user-item {
+  color: #FFD700;
+}
+
+/* ✅ Style du formulaire d'ajout de département */
+.department-form {
+  background: #333; /* Fond gris foncé */
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  border-radius: 10px;
+  border: 2px solid #FFD700; /* Bordure dorée */
+  color: #FFD700; /* Texte doré */
+}
+
+/* ✅ Titre du formulaire */
+.department-form h3 {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  color: #FFD700;
+}
+
+/* ✅ Style des champs du formulaire */
+.department-form input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 2px solid #FFD700;
+  border-radius: 5px;
+  background: #222; /* Fond sombre */
+  color: #FFD700; /* Texte doré */
+}
+
+/* ✅ Style du bouton d'ajout */
+.department-form button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background: #FFD700;
+  color: #000;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.department-form button:hover {
+  background: #fff;
+  color: #000;
+}
+
