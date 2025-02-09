@@ -17,7 +17,7 @@ const Navbar = () => {
           to="/laboratoires-equipements" 
           className="nav-button"
         >
-          Laboratoires
+          Laboratoires & Equipement
         </Link>
       </div>
 

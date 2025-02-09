@@ -1,34 +1,28 @@
-import { useParams } from 'react-router-dom';
+/*detailles de la page Laboratoire*/
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import '../App.css';
 
 const LaboratoireDetail = () => {
     const { id } = useParams();
     const [laboratoire, setLaboratoire] = useState(null);
-    const [equipements, setEquipements] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://192.168.2.88:5000/api/laboratories/${id}`)
-            .then(response => setLaboratoire(response.data))
-            .catch(error => console.error("Erreur :", error));
-
-        axios.get(`http://192.168.2.88:5000/api/laboratories/${id}/equipment`)
-            .then(response => setEquipements(response.data))
-            .catch(error => console.error("Erreur :", error));
+        axios.get(`http://10.255.193.252:5000/api/laboratories/${id}`)
+            .then(response => setLaboratoire(response.data.data))
+            .catch(error => console.error("Erreur lors du chargement du laboratoire :", error));
     }, [id]);
 
-    if (!laboratoire) return <p>Chargement...</p>;
+    if (!laboratoire) {
+        return <h2>Chargement...</h2>;
+    }
 
     return (
-        <div>
+        <div className="container">
             <h2>{laboratoire.nom}</h2>
-            <p>{laboratoire.information}</p>
-            <h3>Équipements :</h3>
-            <ul>
-                {equipements.map(e => (
-                    <li key={e.id}>{e.nom} - {e.modele}</li>
-                ))}
-            </ul>
+            <p><strong>Salle :</strong> {laboratoire.salle}</p>
+            <p><strong>Informations :</strong> {laboratoire.information}</p>
         </div>
     );
 };

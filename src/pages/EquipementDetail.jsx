@@ -1,24 +1,28 @@
-import { useParams } from 'react-router-dom';
+/*EquipementDetail*/
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import '../App.css';
 
 const EquipementDetail = () => {
     const { id } = useParams();
     const [equipement, setEquipement] = useState(null);
 
     useEffect(() => {
-        axios.get(`http://192.168.2.88:5000/api/equipment/${id}`)
-            .then(response => setEquipement(response.data))
-            .catch(error => console.error("Erreur :", error));
+        axios.get(`http://10.255.193.252:5000/api/equipment/${id}`)
+            .then(response => setEquipement(response.data.data))
+            .catch(error => console.error("Erreur lors du chargement de l'équipement :", error));
     }, [id]);
 
-    if (!equipement) return <p>Chargement...</p>;
+    if (!equipement) {
+        return <h2>Chargement...</h2>;
+    }
 
     return (
-        <div>
+        <div className="container">
             <h2>{equipement.nom}</h2>
-            <p>Modèle : {equipement.modele}</p>
-            <p>Description : {equipement.description}</p>
+            <p><strong>Modèle :</strong> {equipement.modele}</p>
+            <p><strong>Description :</strong> {equipement.description}</p>
         </div>
     );
 };

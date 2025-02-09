@@ -1,3 +1,6 @@
+
+/*App*/
+
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -11,6 +14,8 @@ import UtilisateursRoles from './pages/UtilisateursRoles';
 import LaboratoiresEquipements from './pages/LaboratoiresEquipements';
 import LaboratoireDetail from './pages/LaboratoireDetail';
 import EquipementDetail from './pages/EquipementDetail';
+/*import './LaboratoiresEquipements.css';*/
+
 function App() {
   return (
     <>
@@ -27,8 +32,5 @@ function App() {
     </>
   ); 
 }
-
-
-
 
 export default App

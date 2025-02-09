@@ -1,0 +1,215 @@
+/* Fond d'écran */
+/* Importation des fonts personnalisés de Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+
+body {
+    background-image: url('https://www.uqac.ca/viaht/wp-content/uploads/2021/09/IMG_6267-500x375.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: black;
+}
+
+/* Conteneur principal */
+.container {
+    text-align: center;
+    padding: 20px;
+}
+
+/* Titre principal */
+.header {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: black;
+}
+
+/* Contenu en colonnes */
+.content {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Sections */
+.section {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    width: 45%;
+    color: white;
+    position: relative;
+}
+
+/* Titres des sections */
+.section h2 {
+    color: yellow;
+    text-align: left;
+}
+
+/* Boutons Ajouter alignés à droite */
+.btn-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+/* Listes */
+ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+}
+
+ul li {
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Liens */
+a {
+    text-decoration: none;
+    color: lightblue;
+    font-weight: bold;
+}
+
+a:hover {
+    color: orange;
+}
+
+/* Style des boutons */
+.btn-add {
+    background-color: yellow;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.btn-add:hover {
+    background-color: orange;
+}
+
+/* Boutons de suppression à droite */
+.btn-delete {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.btn-delete:hover {
+    background-color: darkred;
+}
+
+/* Effets visuels sur les équipements */
+.ancien {
+    background-color: rgba(255, 0, 0, 0.6) !important;
+}
+
+.moderne {
+    background-color: rgba(0, 255, 0, 0.6) !important;
+}
+
+/* Section des informations liées */
+.related-section {
+    margin-top: 15px;
+    padding: 10px;
+    border-top: 1px solid yellow;
+}
+
+.related-section h3 {
+    color: yellow;
+    text-align: left;
+}
+
+/* Styles pour agrandir le texte des détails */
+.container h2 {
+    font-size: 2.5rem;
+    /* Agrandir les titres */
+    font-weight: bold;
+    color: yellow;
+}
+
+.container p {
+    font-size: 1.5rem;
+    /* Agrandir le texte des informations */
+    line-height: 1.6;
+    margin: 10px 0;
+}
+
+/* Style des formulaires d'ajout */
+.form-ajout {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-ajout input {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 1rem;
+}
+
+.form-ajout .btn-add {
+    background-color: yellow;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+/* Image des laboratoires et équipements */
+.image-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.equipement-image,
+.laboratoire-image {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Conteneur pour aligner les boutons Ajouter à droite */
+.btn-container {
+    display: flex;
+    justify-content: flex-end;
+    /* Aligner à droite */
+    margin-bottom: 10px;
+}
+
+/* Style des boutons Ajouter */
+.btn-add {
+    background-color: yellow;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.btn-add:hover {
+    background-color: orange;
+}
+
+
