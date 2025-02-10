@@ -1,0 +1,109 @@
+/* Login.css */
+
+/* Style global pour la page de connexion */
+.login-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    /* Utilisation d'une image de fond ; assurez-vous que le chemin est correct */
+    background: url('/src/pics/123986.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 2rem;
+  }
+  
+  /* Titre de la page */
+  .login-page h1 {
+    margin-bottom: 1rem;
+    color: #fff; /* Couleur claire pour contraster avec l'image */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+  }
+  
+  /* Style du formulaire de connexion */
+  .login-page form {
+    background-color: rgba(255, 255, 255, 0.9); /* Fond blanc semi-transparent */
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    width: 500px;
+    max-width: 300%;
+  }
+  
+  /* Chaque groupe de champs (label + input) */
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  /* Labels */
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #555;
+    font-weight: 500;
+  }
+  
+  /* Champs de saisie */
+  .form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border 0.2s ease;
+  }
+  
+  .form-group input:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  /* Style pour les inputs avec icônes (si vous en ajoutez par la suite) */
+  .input-with-icon {
+    position: relative;
+  }
+  
+  .input-with-icon .icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: #888;
+  }
+  
+  .input-with-icon input {
+    padding-left: 2.5rem;
+  }
+  
+  /* Message d'erreur */
+  .error-message {
+    color: #d9534f;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    text-align: center;
+  }
+  
+  /* Bouton de soumission */
+  button[type="submit"] {
+    width: 100%;
+    padding: 0.85rem;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
+  button[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  

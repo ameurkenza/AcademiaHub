@@ -1,4 +1,4 @@
-// components/Header/Navbar.jsx
+// src/components/Header/Navbar.jsx
 import { Link } from "react-router-dom";
 import './Navbar.css';
 
@@ -17,7 +17,7 @@ const Navbar = () => {
           to="/laboratoires-equipements" 
           className="nav-button"
         >
-          Laboratoires
+          Laboratoires & Équipements
         </Link>
       </div>
 
@@ -30,13 +30,20 @@ const Navbar = () => {
         />
       </Link>
 
-      {/* Côté droit - 1 bouton */}
+      {/* Côté droit - 3 boutons */}
       <div className="nav-section right">
         <Link 
           to="/utilisateurs-roles" 
           className="nav-button"
         >
-          Utilisateurs
+          Utilisateurs & Rôles
+        </Link>
+         
+        <Link 
+          to="/login" 
+          className="nav-button"
+        >
+          Login
         </Link>
       </div>
     </nav>
