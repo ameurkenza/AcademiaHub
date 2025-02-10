@@ -1,0 +1,56 @@
+
+/* Conteneur global de la carte utilisateur */
+.user-card {
+  background: #ffffff;       
+  border: 2px solid #d4af37;   
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin: 0.5rem;
+}
+
+.user-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Style de l'avatar de l'utilisateur */
+.user-avatar {
+  width: 100%;
+  max-width: 150px;
+  height: auto;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+
+/* Zone d'informations sur l'utilisateur */
+.user-info {
+  color: #444;            
+}
+
+/* Chaque élément d'information */
+.user-info p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+}
+
+/* Bouton d'action (ex. voir le profil) */
+.user-action {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: #d4af37;      
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease, border 0.3s ease, color 0.3s ease;
+}
+
+.user-action:hover {
+  background: #ffffff;      
+  color: #d4af37;             
+  border: 2px solid #d4af37;
+}

@@ -1,146 +1,250 @@
+
 .departments-page {
   padding: 2rem;
-  background: #D4AF37; /* Fond doré */
+  background: #D4AF37; 
+  min-height: 100vh;
+  font-family: 'Roboto', sans-serif;
 }
 
 .page-title {
-  color: #000; /* Titre en noir */
   text-align: center;
+  color: #000;
   margin-bottom: 2rem;
+  font-size: 2rem;
 }
 
+/* Container principal */
 .columns-container {
   display: flex;
   gap: 2rem;
-  min-height: 70vh;
+  flex-wrap: wrap;
 }
 
-/* Colonnes en noir */
-.department-column,
-.subject-column {
+/* ===Colonne des départements ===*/
+.department-column {
   flex: 1;
-  background: #1a1a1a; /* Noir */
+  background: #fff;      
   border: 2px solid #FFD700;
   border-radius: 10px;
   padding: 1.5rem;
+  color: #FFD700;           
 }
 
-/* Titre des colonnes en doré */
+/* ==Colonne des matières == */
+.subject-column {
+  flex: 1;
+  background: #1a1a1a;
+  border: 2px solid #FFD700;
+  border-radius: 10px;
+  padding: 1.5rem;
+  color: #FFD700;
+}
+
+/* En-tête de colonne */
 .column-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
-  color: #FFD700; /* Texte en doré */
 }
 
+/* Bouton de création (Create) */
 .create-button {
-  background: #000;
-  color: #FFD700;
-  border: 2px solid #FFD700;
-  border-radius: 20px;
-  padding: 0.5rem 1.2rem;
+  background: #3498db;
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1rem;
+  border-radius: 5px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  font-weight: bold;
+  transition: background 0.3s ease;
 }
 
 .create-button:hover {
-  background: #FFD700;
-  color: #000;
+  background: #2980b9;
 }
 
+/* ==Container de liste === */
 .list-container {
-  color: #FFD700; /* Texte en doré */
-  height: 500px; /* Hauteur fixe pour l'espace liste */
-  overflow-y: auto; /* Scroll si contenu trop long */
+  background: #444;          
+  border-radius: 8px;
+  padding: 1rem;
+  max-height: 500px;
+  overflow-y: auto;
+  color: #FFD700;
+  margin-top: 1rem;
 }
 
-/* ✅ Ajout du style pour la liste déroulante */
-.department-item {
+/* Items (Départements ou autres) */
+.department-item,
+.item {
   list-style: none;
-  padding: 10px;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
   border-bottom: 1px solid #FFD700;
 }
 
-.department-header {
+/* En-tête d’un département / item */
+.department-header,
+.item-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  padding: 10px;
-  background: #333;
-  color: #FFD700;
-  border-radius: 5px;
 }
 
+/* Bouton Toggle (▶/▼) */
 .toggle-button {
   background: none;
   border: none;
   color: #FFD700;
-  font-size: 16px;
+  font-size: 1.2rem;
   cursor: pointer;
 }
 
-.department-details {
-  background: #222;
-  padding: 10px;
-  margin-top: 5px;
+/* ==Zone de détails ==== */
+.department-details,
+.item-details {
+  background: #444;     
+  padding: 0.8rem;
+  margin-top: 0.5rem;
   border-radius: 5px;
 }
 
-.user-list {
-  padding-left: 20px;
+/* Image (Département) */
+.department-image {
+  max-width: 100%;
+  border-radius: 5px;
+  margin-top: 0.5rem;
 }
 
-.user-item {
-  color: #FFD700;
+/* Listes internes */
+.user-list,
+.subject-list {
+  list-style: none;
+  padding: 0;
 }
 
-/* ✅ Style du formulaire d'ajout de département */
-.department-form {
-  background: #333; /* Fond gris foncé */
+.user-item,
+.subject-item {
+  margin-bottom: 0.5rem;
+}
+
+/* ==Formulaires == */
+.form-container {
+  background: #444;            
   padding: 1.5rem;
-  margin-top: 1.5rem;
   border-radius: 10px;
-  border: 2px solid #FFD700; /* Bordure dorée */
-  color: #FFD700; /* Texte doré */
+  border: 2px solid #FFD700;
+  margin-bottom: 1rem;
 }
 
-/* ✅ Titre du formulaire */
-.department-form h3 {
+/* Titres dans le formulaire */
+.form-container h3,
+.form-container h4 {
   text-align: center;
   margin-bottom: 1rem;
-  font-size: 1.4rem;
   color: #FFD700;
 }
 
-/* ✅ Style des champs du formulaire */
-.department-form input {
+/* Champs (input, textarea, select) */
+.form-container input,
+.form-container textarea,
+.form-container select {
   width: 100%;
-  padding: 10px;
-  margin: 10px 0;
+  padding: 0.8rem;
+  margin: 0.5rem 0;
   border: 2px solid #FFD700;
   border-radius: 5px;
-  background: #222; /* Fond sombre */
-  color: #FFD700; /* Texte doré */
+  background: #222;        
+  color: #FFD700;           
 }
 
-/* ✅ Style du bouton d'ajout */
-.department-form button {
+/* Boutons dans le formulaire */
+.form-container button {
   width: 100%;
-  padding: 10px;
-  margin-top: 10px;
+  padding: 0.8rem;
+  margin-top: 1rem;
   background: #FFD700;
   color: #000;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
-  transition: all 0.3s ease;
+  transition: background 0.3s ease;
 }
 
-.department-form button:hover {
+.form-container button:hover {
   background: #fff;
   color: #000;
 }
 
+/* =Boutons Supprimer / Éditer == */
+.delete-button,
+.edit-button {
+  display: inline-block;
+  width: 150px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.delete-button {
+  background: #e74c3c;
+  color: #ffffff;
+}
+
+.edit-button {
+  background: #3498db;
+  color: #ffffff;
+  margin-right: 0.5rem;
+}
+
+.delete-button:hover {
+  background: #c0392b;
+}
+
+.delete-button:active {
+  transform: scale(0.98);
+}
+
+.delete-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.5);
+}
+
+.edit-button:hover {
+  background: #2980b9;
+}
+
+/*  Bloc de mise à jour de fichier */
+.file-update-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Pour l'input type="file" */
+.file-update-form input[type="file"] {
+  margin-bottom: 0.5rem;
+}
+
+/* Sélecteur multiple*/
+.multi-select {
+  width: 100%;
+  padding: 0.8rem;
+  margin: 0.5rem 0;
+  border: 2px solid #FFD700;
+  border-radius: 5px;
+  background: #222;
+  color: #FFD700;
+}

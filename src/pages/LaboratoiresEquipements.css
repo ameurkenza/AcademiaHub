@@ -1,0 +1,83 @@
+
+/* Le conteneur principal */
+.laboratoire-equipement-container {
+ 
+
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+}
+
+.laboratoire-equipement-container h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.laboratoire-equipement-container section {
+  margin-bottom: 2rem;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 4px;
+}
+
+.laboratoire-equipement-container h2 {
+  margin-bottom: 1rem;
+}
+
+/* Formulaires de labo / équipement*/
+.lab-form,
+.equipement-form,
+.lab-update-form,
+.equip-update-form {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.lab-form input,
+.equipement-form input,
+.lab-update-form input,
+.equip-update-form input {
+  flex: 1;
+  padding: 0.5rem;
+}
+
+.lab-form button,
+.equipement-form button,
+.lab-update-form button,
+.equip-update-form button {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+/* Listes de laboratoires / équipements */
+.lab-list,
+.equip-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.lab-list li,
+.equip-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  background-color: #f9f9f9;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+/* Boutons dans la liste (Éditer, Supprimer, etc.) */
+.lab-list button,
+.equip-list button {
+  margin-left: 0.5rem;
+  background-color: #ddd;
+  border: none;
+  padding: 0.3rem 0.6rem;
+}
+
+.lab-list button:hover,
+.equip-list button:hover {
+  background-color: #bbb;
+}
