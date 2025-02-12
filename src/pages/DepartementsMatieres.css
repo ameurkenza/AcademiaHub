@@ -1,10 +1,18 @@
 
-.departments-page {
-  padding: 2rem;
-  background: #D4AF37; 
-  min-height: 100vh;
+.departements-matieres-page {
+  background: #000; /* Fond noir */
+  color: #FFD700; /* Texte doré pour contraste */
+  min-height: 100vh; /* Assure que toute la page est couverte */
+  padding: 2rem; /* Ajoute un peu d'espace */
   font-family: 'Roboto', sans-serif;
 }
+
+/* departments-page {
+  padding: 2rem;
+  background: #000000; 
+  min-height: 100vh;
+  font-family: 'Roboto', sans-serif;
+} */
 
 .page-title {
   text-align: center;
@@ -23,21 +31,24 @@
 /* ===Colonne des départements ===*/
 .department-column {
   flex: 1;
-  background: #fff;      
+  background: #000000;      
   border: 2px solid #FFD700;
   border-radius: 10px;
   padding: 1.5rem;
   color: #FFD700;           
 }
 
-/* ==Colonne des matières == */
+
+
+
 .subject-column {
   flex: 1;
-  background: #1a1a1a;
+  background: #000000 !important;
   border: 2px solid #FFD700;
   border-radius: 10px;
   padding: 1.5rem;
   color: #FFD700;
+  position: relative;
 }
 
 /* En-tête de colonne */
@@ -50,7 +61,7 @@
 
 /* Bouton de création (Create) */
 .create-button {
-  background: #3498db;
+  background: #FFD700 !important;
   color: #fff;
   border: none;
   padding: 0.8rem 1rem;
@@ -61,12 +72,12 @@
 }
 
 .create-button:hover {
-  background: #2980b9;
+  background: #FFD700;
 }
 
 /* ==Container de liste === */
 .list-container {
-  background: #444;          
+  background: #d4af37 !important;          
   border-radius: 8px;
   padding: 1rem;
   max-height: 500px;
@@ -105,7 +116,7 @@
 /* ==Zone de détails ==== */
 .department-details,
 .item-details {
-  background: #444;     
+  background: #000;     
   padding: 0.8rem;
   margin-top: 0.5rem;
   border-radius: 5px;
@@ -132,7 +143,7 @@
 
 /* ==Formulaires == */
 .form-container {
-  background: #444;            
+  background: #000000  !important;            
   padding: 1.5rem;
   border-radius: 10px;
   border: 2px solid #FFD700;
@@ -156,16 +167,28 @@
   margin: 0.5rem 0;
   border: 2px solid #FFD700;
   border-radius: 5px;
-  background: #222;        
+  background: #d4af37 !important;        
   color: #FFD700;           
 }
+
+button[type="submit"] {
+  background: #0000!important; /* Or */
+  color: #000 !important; /* Texte noir */
+  border: none;
+  padding: 0.85rem;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
 
 /* Boutons dans le formulaire */
 .form-container button {
   width: 100%;
   padding: 0.8rem;
   margin-top: 1rem;
-  background: #FFD700;
+  background: #FFD700 !important;
   color: #000;
   border: none;
   border-radius: 5px;
@@ -178,6 +201,7 @@
   background: #fff;
   color: #000;
 }
+
 
 /* =Boutons Supprimer / Éditer == */
 .delete-button,
@@ -245,6 +269,6 @@
   margin: 0.5rem 0;
   border: 2px solid #FFD700;
   border-radius: 5px;
-  background: #222;
+  background: #000;
   color: #FFD700;
 }

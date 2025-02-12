@@ -1,23 +1,54 @@
 
 /* Le conteneur principal */
-.laboratoire-equipement-container {
- 
-
-  padding: 1rem;
-  font-family: Arial, sans-serif;
+.columns-container {
+  display: flex; /* Met les colonnes en ligne */
+  justify-content: space-between; /* Espace entre les colonnes */
+  align-items: flex-start; /* Aligne les colonnes en haut */
+  gap: 2rem; /* Ajoute un espace entre les colonnes */
+  flex-wrap: wrap; /* Permet le retour à la ligne si l'écran est trop petit */
+  width: 100%;
 }
+
+.lab-column,
+.equip-column {
+  flex: 1; /* Chaque colonne prend la moitié de l'espace disponible */
+  min-width: 45%; /* Assure que les colonnes ne deviennent pas trop étroites */
+  max-width: 50%; /* Évite qu'une colonne soit plus grande que l'autre */
+  box-sizing: border-box; /* Évite que le padding agrandisse les colonnes */
+}
+
+
+
 
 .laboratoire-equipement-container h1 {
   text-align: center;
   margin-bottom: 2rem;
 }
 
-.laboratoire-equipement-container section {
-  margin-bottom: 2rem;
-  border: 1px solid #ccc;
-  padding: 1rem;
-  border-radius: 4px;
+.laboratoire-equipement-container {
+  display: flex; /* Permet d'afficher en ligne */
+  justify-content: space-between; /* Répartit les colonnes */
+  align-items: flex-start; /* Aligne les colonnes en haut */
+  gap: 2rem; /* Espace entre les colonnes */
+  flex-wrap: wrap; /* Permet le retour à la ligne si l'écran est trop petit */
 }
+
+.laboratoire-equipement-container {
+  width: 100%; /* S'assure que le conteneur prend toute la largeur */
+  max-width: 1200px; /* Empêche un étirement trop grand */
+  margin: 0 auto; /* Centre le contenu */
+}
+
+.laboratoires-equipements-page {
+  background-color: #000; /* Fond noir */
+  color: #FFD700; /* Texte doré pour contraste */
+  min-height: 100vh; /* Assure que toute la page est couverte */
+  padding: 2rem; /* Ajoute un peu d'espace */
+  font-family: 'Roboto', sans-serif;
+}
+
+
+
 
 .laboratoire-equipement-container h2 {
   margin-bottom: 1rem;

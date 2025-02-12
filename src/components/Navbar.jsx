@@ -38,12 +38,7 @@ const Navbar = () => {
         >
           Utilisateurs & Rôles
         </Link>
-        <Link 
-          to="/contact" 
-          className="nav-button"
-        >
-          Contactez-nous
-        </Link>
+       
         <Link 
           to="/login" 
           className="nav-button"

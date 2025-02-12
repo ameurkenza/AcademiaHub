@@ -7,7 +7,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background-color: #333; /* Fond gris foncé */
+  background-color: #000000; /* Fond gris foncé */
+  border-top: 2px solid #D4AF37 !important; 
   position: relative;
   min-height: 70px;
 }
@@ -35,17 +36,17 @@ body {
 }
 
 .nav-button {
-  color: #fff;               /* Texte blanc */
+  color: #D4AF37;          
   text-decoration: none;
   padding: 0.8rem 1.5rem;
   border-radius: 25px;
-  border: 2px solid #fff;    
+  border: 2px solid #D4AF37;  
   transition: all 0.3s ease;
   font-weight: 500;
 }
 
 .nav-button:hover {
-  background-color: #e4963c;    
+  background-color: #D4AF37; 
   color: #333;                
 }
 

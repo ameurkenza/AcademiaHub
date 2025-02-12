@@ -1,20 +1,4 @@
-/* Assurez-vous d'importer ces polices dans votre index.html :
-   <!-- Importation de Open Sans -->
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-
-   <!-- Importation de Montserrat -->
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-
-   <!-- Importation de Lato -->
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
-*/
-
+/* Réinitialisation des marges et paddings */
 body, h1, h2, h3, h4, p, ul, li, figure, figcaption {
   margin: 0;
   padding: 0;
@@ -23,18 +7,20 @@ body, h1, h2, h3, h4, p, ul, li, figure, figcaption {
 /* Corps du document */
 body {
   font-family: 'Open Sans', sans-serif;
-  color: #333;
-  background: #fff;
+  color: #FFD700; /* Texte doré */
+  background: #0a0a0a; /* Fond noir foncé */
 }
 
 /* Titres */
 h1, h2, h3 {
   font-family: 'Montserrat', sans-serif;
+  color: #FFD700; /* Doré */
 }
 
 /* Paragraphes */
 p {
   font-family: 'Lato', sans-serif;
+  color: #FFD700; /* Doré */
 }
 
 /* ===== SLIDER SECTION ===== */
@@ -53,7 +39,7 @@ p {
 
 .slider-inner {
   display: flex;
-  width: 100%; /* 3 slides */
+  width: 100%;
   height: 100%;
   animation: slideAnimation 12s infinite;
 }
@@ -68,7 +54,7 @@ p {
 .slide img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Remplit le conteneur tout en gardant un rendu esthétique */
+  object-fit: cover; 
 }
 
 /* Overlay dégradé pour améliorer la lisibilité de la légende */
@@ -87,7 +73,7 @@ p {
   bottom: 20%;
   left: 10%;
   z-index: 2;
-  color: #fff;
+  color: #FFD700; /* Doré */
   text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
 }
 
@@ -105,13 +91,13 @@ p {
 .intro {
   text-align: center;
   padding: 2rem 1rem;
-  background: #f2f2f2;
+  background: #1a1a1a; /* Noir légèrement éclairci */
 }
 
 .intro h1 {
   font-size: 2.8rem;
   margin-bottom: 1rem;
-  color: #1a1a1a;
+  color: #FFD700;
 }
 
 .intro p {
@@ -119,7 +105,7 @@ p {
   margin-bottom: 1.5rem;
   max-width: 800px;
   margin: 0 auto;
-  color: #555;
+  color: #FFD700;
   line-height: 1.5;
 }
 
@@ -145,7 +131,7 @@ p {
   justify-content: space-around;
   align-items: flex-start;
   padding: 3rem 1rem;
-  background: #fff;
+  background: #111; /* Noir plus profond */
   flex-wrap: wrap;
 }
 
@@ -155,9 +141,9 @@ p {
   text-align: center;
   margin: 1rem;
   padding: 1rem;
-  border: 1px solid #eee;
+  border: 1px solid #FFD700; /* Bordure dorée */
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 4px rgba(255, 215, 0, 0.2);
   transition: transform 0.3s ease;
 }
 
@@ -168,31 +154,32 @@ p {
 .feature h2 {
   font-size: 1.8rem;
   margin-bottom: 1rem;
-  color: #1a1a1a;
+  color: #FFD700;
 }
 
 .feature p {
   font-size: 1rem;
-  color: #666;
+  color: #FFD700;
   line-height: 1.5;
 }
 
 /* ===== SECTION À PROPOS ===== */
 .about {
   padding: 3rem 1rem;
-  background: #f9f9f9;
+  background: #1a1a1a; /* Noir foncé */
   text-align: center;
+  border: 1px solid #FFD700; /* Bordure dorée */
 }
 
 .about h2 {
   font-size: 2rem;
   margin-bottom: 1.5rem;
-  color: #1a1a1a;
+  color: #FFD700;
 }
 
 .about p {
   font-size: 1.1rem;
-  color: #555;
+  color: #FFD700;
   max-width: 900px;
   margin: 0 auto;
   line-height: 1.6;

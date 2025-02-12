@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import DepartementsMatieres from './pages/DepartementsMatieres';
 import UtilisateursRoles from './pages/UtilisateursRoles';
 import LaboratoiresEquipements from './pages/LaboratoiresEquipements';
+import Login from './pages/Login';
 import './App.css';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/departements-matieres" element={<DepartementsMatieres />} />
         <Route path="/utilisateurs-roles" element={<UtilisateursRoles />} />
         <Route path="/laboratoires-equipements" element={<LaboratoiresEquipements />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
       <Footer />
     </>

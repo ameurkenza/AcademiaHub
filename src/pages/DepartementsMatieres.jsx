@@ -11,14 +11,34 @@ const DOMAIN_URL = import.meta.env.VITE_SERVER_URL;
  * Convertit l'image en Blob URL pour un affichage plus rapide et sans appel réseau supplémentaire.
  */
 const chargerImage = async (imagePath) => {
-  if (!imagePath) return null;
+  console.log("🖼️ imagePath reçu :", imagePath, typeof imagePath); // 🔍 Debug
+
+  if (!imagePath) {
+    console.error("⚠️ imagePath est vide ou invalide.");
+    return null;
+  }
+
+  // Si c'est un objet `File`, il faut créer une URL locale temporaire
+  if (imagePath instanceof File) {
+    console.log("📂 L'image est un fichier, on génère une URL temporaire.");
+    return URL.createObjectURL(imagePath);
+  }
+
+  // Vérification que `imagePath` est bien une chaîne
+  if (typeof imagePath !== 'string') {
+    console.error("⚠️ Erreur : imagePath doit être une chaîne de caractères ou un fichier.", imagePath);
+    return null;
+  }
+
   try {
     const fullUrl =
       imagePath.startsWith('http://') || imagePath.startsWith('https://')
         ? imagePath
         : `${DOMAIN_URL}/${imagePath.replace(/^\/+/, '')}`;
+    
     const response = await fetch(fullUrl, { mode: 'cors' });
     if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+    
     const blob = await response.blob();
     return URL.createObjectURL(blob);
   } catch (error) {
@@ -26,6 +46,8 @@ const chargerImage = async (imagePath) => {
     return null;
   }
 };
+
+
 
 /** 
  * Génère l'URL correcte d'une image.
@@ -92,7 +114,7 @@ const DepartementsMatieres = () => {
   });
   const [subjectImageFile, setSubjectImageFile] = useState(null);
 
-  /* ===================== 📌 CHARGEMENT INITIAL DES DONNÉES ===================== */
+  /* ===================== CHARGEMENT INITIAL DES DONNÉES ===================== */
   useEffect(() => {
     /** 
      * Récupère la liste des départements depuis l'API.
@@ -196,6 +218,54 @@ const DepartementsMatieres = () => {
     } catch (err) {
       console.error('Erreur lors de la création du département :', err);
     }
+  };
+
+
+  const startEditingDepartment = (deptId) => {
+    setEditingDepartmentId(deptId);
+    const dept = departments.find((d) => d.id === deptId);
+    if (dept) {
+      setEditDepartmentData({
+        nom: dept.nom || '',
+        histoire: dept.histoire || '',
+        domaine: dept.domaine || '',
+      });
+    }
+  };
+
+
+  
+
+
+  const handleEditDepartmentChange = (e) => {
+    const { name, value } = e.target;
+    setEditDepartmentData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleEditDepartmentSubmit = async (deptId) => {
+    try {
+      const response = await axios.put(`${DOMAIN_URL}/departments/${deptId}`, editDepartmentData);
+      const updatedDept = response.data?.data || response.data;
+      const oldDept = departments.find((d) => d.id === deptId);
+      const finalImage = oldDept?.image || null;
+      setDepartments((prev) =>
+        prev.map((d) => (d.id === deptId ? { ...updatedDept, image: finalImage } : d))
+      );
+      setEditingDepartmentId(null);
+    } catch (err) {
+      console.error('Erreur lors de la mise à jour du département :', err);
+    }
+  };
+
+
+
+
+  const handleDeleteDepartment = (deptId) => {
+    axios.delete(`${DOMAIN_URL}/departments/${deptId}`)
+      .then(() => {
+        setDepartments((prev) => prev.filter((d) => d.id !== deptId));
+      })
+      .catch((err) => console.error('Erreur lors de la suppression du département :', err));
   };
 
   

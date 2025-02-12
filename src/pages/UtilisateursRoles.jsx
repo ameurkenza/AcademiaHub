@@ -152,8 +152,8 @@ const UtilisateursRoles = () => {
   const [laboratoriesLoading, setLaboratoriesLoading] = useState(true);
   const [laboratoriesError, setLaboratoriesError] = useState(null);
 
-  /* ===================== CHARGEMENT INITIAL ===================== */
   useEffect(() => {
+    // Charger les utilisateurs
     axios.get(`${DOMAIN_URL}/users`)
       .then(response => {
         setUsers(response.data?.data?.users || []);
@@ -164,18 +164,49 @@ const UtilisateursRoles = () => {
         setUsersError(err);
         setUsersLoading(false);
       });
+  //Charger les roles
+  axios.get(`${DOMAIN_URL}/roles`)
+  .then(response => {
+    console.log("✅ Rôles récupérés :", response.data);
+    const rolesData = response.data.data || [];
+    setRoles(rolesData);
+    setRolesLoading(false);
 
-    axios.get(`${DOMAIN_URL}/roles`)
-      .then(response => {
-        setRoles(response.data?.data?.roles || []);
-        setRolesLoading(false);
-      })
-      .catch(err => {
-        console.error("⚠️ Erreur lors du chargement des rôles :", err);
-        setRolesError(err);
-        setRolesLoading(false);
+    // 🔄 **Nouvelle étape** : Récupération des utilisateurs pour chaque rôle
+    Promise.all(
+      rolesData.map(role =>
+        axios.get(`${DOMAIN_URL}/roles/${role.id}/users`)
+          .then(res => ({
+            ...role,
+            users: res.data.users || [] // Ajout des utilisateurs au rôle
+          }))
+          .catch(err => {
+            console.error(`⚠️ Erreur lors du chargement des utilisateurs pour le rôle ${role.id}:`, err);
+            return { ...role, users: [] }; // Assure que chaque rôle a une liste vide si erreur
+          })
+      )
+    ).then(rolesWithUsers => {
+      const roleDetailsMap = {};
+      rolesWithUsers.forEach(role => {
+        roleDetailsMap[role.id] = role; // Stocke chaque rôle avec ses utilisateurs
       });
 
+      console.log("✅ Détails des rôles mis à jour :", roleDetailsMap); // Vérifie si les utilisateurs sont bien là
+      setRoleDetails(roleDetailsMap);
+
+      // ✅ Ajout du console.log pour voir `roleDetails` après la mise à jour
+      console.log("👀 Utilisateurs pour chaque rôle :", roleDetailsMap);
+    });
+  })
+  .catch(err => {
+    console.error("⚠️ Erreur lors du chargement des rôles :", err);
+    setRolesError(err);
+    setRolesLoading(false);
+  });
+
+    
+  
+    // Charger les matières
     axios.get(`${DOMAIN_URL}/subjects`)
       .then(response => {
         setSubjects(response.data?.data?.subjects || []);
@@ -186,7 +217,8 @@ const UtilisateursRoles = () => {
         setSubjectsError(err);
         setSubjectsLoading(false);
       });
-
+  
+    // Charger les départements
     axios.get(`${DOMAIN_URL}/departments`)
       .then(response => {
         setDepartments(response.data?.data?.departments || []);
@@ -197,7 +229,8 @@ const UtilisateursRoles = () => {
         setDepartmentsError(err);
         setDepartmentsLoading(false);
       });
-
+  
+    // Charger les laboratoires
     axios.get(`${DOMAIN_URL}/laboratories`)
       .then(response => {
         setLaboratories(response.data?.data?.laboratories || []);
@@ -208,8 +241,9 @@ const UtilisateursRoles = () => {
         setLaboratoriesError(err);
         setLaboratoriesLoading(false);
       });
+  
   }, []);
-
+  
   /* ===================== FONCTIONS UTILISATEURS ===================== */
   const toggleUserDetails = async (userId) => {
     if (expandedUser === userId) {
@@ -513,6 +547,9 @@ const UtilisateursRoles = () => {
       .catch(err => console.error("⚠️ Erreur lors de la suppression de la matière :", err));
   };
 
+  console.log("🎯 Rôles:", roles);
+console.log("📌 Détails des rôles:", roleDetails);
+
   /* ===================== RENDU (JSX) ===================== */
   return (
     <div className="utilisateurs-roles-page">
@@ -690,21 +727,23 @@ const UtilisateursRoles = () => {
                     </div>
                     {expandedRole === role.id && roleDetails[role.id] && (
                       <div className="item-details">
-                        <p><strong>ID :</strong> {roleDetails[role.id].id}</p>
-                        {roleDetails[role.id].users && roleDetails[role.id].users.length > 0 ? (
-                          <div>
-                            <h3>Utilisateurs associés :</h3>
-                            <ul>
-                              {roleDetails[role.id].users.filter(u => u).map(u => (
-                                <li key={u.id}>{u.nom} {u.prenom} ({u.email})</li>
-                              ))}
-                            </ul>
-                          </div>
-                        ) : (
-                          <p>Aucun utilisateur associé</p>
-                        )}
-                        <button className="delete-button" onClick={() => handleDeleteRole(role.id)}>Supprimer</button>
-                      </div>
+                      <p><strong>ID :</strong> {roleDetails[role.id].id}</p>
+                      {console.log(`👀 Affichage des utilisateurs pour le rôle ${role.id}:`, roleDetails[role.id].users)}
+                      {roleDetails[role.id].users && roleDetails[role.id].users.length > 0 ? (
+                        <div>
+                          <h3>Utilisateurs associés :</h3>
+                          <ul>
+                            {roleDetails[role.id].users.map(u => (
+                              <li key={u.id || u.email || Math.random()}>{u.nom} {u.prenom} ({u.email})</li>
+                            ))}
+                          </ul>
+                        </div>
+                      ) : (
+                        <p>❌ Aucun utilisateur associé</p>
+                      )}
+                      
+                      <button className="delete-button" onClick={() => handleDeleteRole(role.id)}>Supprimer</button>
+                    </div>
                     )}
                   </li>
                 ))}
