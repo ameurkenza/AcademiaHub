@@ -42,10 +42,10 @@
 - **virtualbox**:Pour le frontend 
 
 ![icons8-visual-studio-code-240](![icons8-css-144](https://github.com/user-attachments/assets/e181f6e1-7efb-4a06-80f4-4625d40c9057))
-![96018_Axios_icon](![image](https://github.com/user-attachments/assets/260ce830-8200-487d-bb38-0d528a349a45))
+![image](https://github.com/user-attachments/assets/3a3a59e6-703f-4948-a1d9-dc6e8073182f)
 ![icons8-Fetch API](![image](https://github.com/user-attachments/assets/4db6d1bf-3f27-4b47-bf2b-ed364d1d94ec))
-![React.js](![react](https://github.com/user-attachments/assets/e8d089fe-f34e-418e-be25-7abbb866e33b))
-![nodejs 224x256](![css-3 362x512](https://github.com/user-attachments/assets/bf978131-8e2e-40c9-ad36-96463f60bfff))
+![react](https://github.com/user-attachments/assets/e038634d-158c-4e1e-8796-3ec34d9014fe)
+![icons8-css-144](https://github.com/user-attachments/assets/635f59ce-6a52-4693-aba8-81baab825c1a)
 !![virtualbox_logo_icon_169253 (1)](https://github.com/user-attachments/assets/8e3c72e1-ff66-40fb-97c5-40d526fdcf0e)
 
 
