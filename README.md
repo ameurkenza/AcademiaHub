@@ -42,14 +42,14 @@
 
 
 
-## 📢 Remarque
+##  Remarque
 - Les images sont chargées via `fetch()` et converties en Blob URL pour une meilleure performance.
 - La gestion des erreurs est implémentée pour chaque requête API.
 - La mise à jour des images est gérée séparément des autres données.
 
 ---
 
-## 📜 Auteur
+## Auteur
 - Kenza Ameur
 - Jugurta Maziz
 - Christie Mosseca Louis
@@ -58,5 +58,5 @@
 
 ---
 
-Merci d'utiliser **AcademiaHub** ! 🎓🚀
+Merci d'utiliser **AcademiaHub** ! 🎓
 
