@@ -16,20 +16,20 @@
 - [ ] Gestion des erreurs lors du chargement des données
 
 ### 2️ **Gestion des Utilisateurs et Rôles** (UtilisateursRoles.jsx)
-- Ajout, modification et suppression des utilisateurs (nom, prénom, email, mot de passe, biographie, département, photo)
-- Affichage des utilisateurs avec leurs détails (photo, biographie, conduite, département)
-- Gestion des rôles (ajout, suppression et association d'un rôle à un utilisateur)
-- Association des utilisateurs à des matières
-- Chargement dynamique des images utilisateur
-- Gestion des erreurs et vérification des données
+- [ ] Ajout, modification et suppression des utilisateurs (nom, prénom, email, mot de passe, biographie, département, photo)
+- [ ] Affichage des utilisateurs avec leurs détails (photo, biographie, conduite, département)
+- [ ] Gestion des rôles (ajout, suppression et association d'un rôle à un utilisateur)
+- [ ] Association des utilisateurs à des matières
+- [ ] Chargement dynamique des images utilisateur
+- [ ] Gestion des erreurs et vérification des données
 
 ### 3️ **Gestion des Laboratoires et Équipements** (LaboratoiresEquipements.jsx)
-- Ajout, modification et suppression des laboratoires (nom, salle, information, département associé, image)
-- Affichage des laboratoires et chargement dynamique des images
-- Ajout, modification et suppression des équipements (nom, modèle, description, image)
-- Gestion des associations entre laboratoires et équipements
-- Interaction avec l'API pour charger les équipements disponibles
-- Gestion des erreurs lors des requêtes API
+- [ ] Ajout, modification et suppression des laboratoires (nom, salle, information, département associé, image)
+- [ ] Affichage des laboratoires et chargement dynamique des images
+- [ ] Ajout, modification et suppression des équipements (nom, modèle, description, image)
+- [ ] Gestion des associations entre laboratoires et équipements
+- [ ] Interaction avec l'API pour charger les équipements disponibles
+- [ ] Gestion des erreurs lors des requêtes API
 
 ---
 
