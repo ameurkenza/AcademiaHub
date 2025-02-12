@@ -39,7 +39,7 @@
 - **CSS** : Pour la mise en page et le design des composants
 - **Fetch API** : Pour le chargement des images avec gestion des Blob URLs
 - **visual-studio-code**
-- **virtualbox**:Pour le frontend 
+- **virtualbox**: Pour le frontend 
 
 ![icons8-visual-studio-code-240](https://github.com/user-attachments/assets/5ea264d4-487a-4efd-9c31-7b7c5618fdb4)
 ![image](https://github.com/user-attachments/assets/3a3a59e6-703f-4948-a1d9-dc6e8073182f)
