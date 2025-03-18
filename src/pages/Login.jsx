@@ -1,38 +1,33 @@
-// src/pages/Login.jsx
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../redux/authSlice';
+import { useNavigate } from 'react-router-dom'; 
 import './Login.css';
- 
- 
-const DOMAIN_URL = import.meta.env.VITE_SERVER_URL;
- 
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [motDePasse, setMotDePasse] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
- 
-  // Gestion de la soumission du formulaire
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    setLoading(true);
-    try {
-      // Envoi des identifiants à l'API (adapté à votre endpoint)
-      const response = await axios.post(`${DOMAIN_URL}/login`, {
-        email,
-        mot_de_passe: motDePasse,
-      });
-      console.log('Connexion réussie', response.data);
-      // Vous pouvez sauvegarder le token, rediriger l'utilisateur, etc.
-    } catch (err) {
-      console.error("Erreur de connexion :", err);
-      setError("Identifiants invalides ou erreur de connexion");
-    } finally {
-      setLoading(false);
+  const [loginAttempted, setLoginAttempted] = useState(false); // ✅ Nouvel état pour suivre la tentative de connexion
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
+  const { token, loading, error } = useSelector((state) => state.auth);
+
+  // ✅ Redirection uniquement après une tentative de connexion réussie
+  useEffect(() => {
+    if (loginAttempted && token) {
+      console.log("✅ Redirection en cours vers /departements-matieres");
+      navigate('/departements-matieres');
     }
+  }, [token, loginAttempted, navigate]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoginAttempted(true); // ✅ Marque que l'utilisateur a tenté de se connecter
+    dispatch(loginUser({ email, motDePasse }));
   };
- 
+
   return (
     <div className="login-page">
       <h1>Connexion</h1>
@@ -65,6 +60,5 @@ const Login = () => {
     </div>
   );
 };
- 
+
 export default Login;
- 
