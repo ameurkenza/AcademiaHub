@@ -1,26 +1,24 @@
-// src/components/UpdateEquipement.jsx
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { updateEquipement, updateEquipementImage, fetchEquipements } from "../redux/EquipementSlice.js";
+import { useDispatch } from "react-redux";
+import { updateEquipement } from "../redux/EquipementSlice";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-const UpdateEquipement = ({ equipement, onClose }) => {
+const UpdateEquipement = ({ equipement, onEquipementUpdated, onClose }) => {
   const dispatch = useDispatch();
-  const token = useSelector((state) => state.auth.token);
 
-  // ✅ États pour stocker les modifications
+  // Stocker les informations mises à jour
   const [updatedEquipement, setUpdatedEquipement] = useState({
     nom: equipement.nom || "",
     modele: equipement.modele || "",
     description: equipement.description || "",
     LaboratoryId: equipement.LaboratoryId || "",
+    image: null, // Image sélectionnée (si modifiée)
   });
 
-  const [newImage, setNewImage] = useState(null);
   const [imageUpdated, setImageUpdated] = useState(false);
   const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
 
-  // ✅ Validation du formulaire
+  //  Validation du formulaire
   const validateForm = () => {
     let formErrors = {};
     if (!updatedEquipement.nom) formErrors.nom = "Le nom est requis.";
@@ -30,131 +28,138 @@ const UpdateEquipement = ({ equipement, onClose }) => {
     return formErrors;
   };
 
-  // ✅ Gestion des modifications des champs
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "image" && files.length > 0) {
-      setNewImage(files[0]);
+      setUpdatedEquipement({ ...updatedEquipement, image: files[0] });
       setImageUpdated(true);
     } else {
       setUpdatedEquipement({ ...updatedEquipement, [name]: value });
     }
   };
 
-  // ✅ Gestion de la mise à jour des champs texte
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
 
+    // Validation des erreurs avant l'envoi
     const formErrors = validateForm();
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
-      setLoading(false);
       return;
     }
 
-    console.log("📤 Envoi des données texte :", updatedEquipement);
+    // Création de l'objet FormData
+    const formData = new FormData();
+    formData.append("nom", updatedEquipement.nom);
+    formData.append("modele", updatedEquipement.modele);
+    formData.append("description", updatedEquipement.description);
+    formData.append("LaboratoryId", updatedEquipement.LaboratoryId);
 
-    dispatch(updateEquipement({ id: equipement.id, updatedData: updatedEquipement })).then(() => {
-      dispatch(fetchEquipements()); // 🔄 Rafraîchir Redux
-      setLoading(false);
-      onClose(); // 🔹 Fermer le formulaire
+    // Ajouter l'image seulement si elle a été modifiée
+    if (imageUpdated && updatedEquipement.image) {
+      formData.append("image", updatedEquipement.image);
+    }
+
+    console.log("🚀 Données envoyées à Redux :", formData);
+
+    // Dispatch de la mise à jour avec Redux
+    dispatch(updateEquipement({ id: equipement.id, updatedData: formData })).then((action) => {
+      if (action.payload) {
+        console.log("✅ Équipement mis à jour :", action.payload);
+        onEquipementUpdated(action.payload);
+        onClose();
+      } else {
+        console.error("❌ Erreur lors de la mise à jour.");
+      }
     });
   };
 
-  // ✅ Gestion de la mise à jour de l’image
-  const handleImageUpdate = async () => {
-    if (!newImage) return;
-  
-    const formData = new FormData();
-    formData.append("image", newImage);
-  
-    console.log("📤 Envoi de la nouvelle image :", newImage.name);
-  
-    dispatch(updateEquipementImage({ id: equipement.id, formData }))
-      .then(() => {
-        dispatch(fetchEquipements()); // 🔄 Rafraîchir Redux
-        setImageUpdated(false);
-        setNewImage(null);
-      })
-      .catch((error) => {
-        console.error("❌ Erreur lors de l'envoi de l'image :", error);
-      });
-  };
-  
-
   return (
-    <div className="container mt-4">
-  <div className="card shadow-sm p-4">
-    <h3 className="text-center mb-3">🛠 Modifier un Équipement</h3>
-    <form onSubmit={handleSubmit} encType="multipart/form-data">
-      
-      {/* Nom */}
-      <div className="mb-3">
-        <label className="form-label">Nom de l'équipement</label>
-        <input type="text" className="form-control" name="nom" placeholder="Nom" value={updatedEquipement.nom} onChange={handleChange} />
-        {errors.nom && <p className="text-danger small">{errors.nom}</p>}
-      </div>
+    <div className="container">
+      <h3 className="mb-4 text-center">✏️ Modifier un Équipement</h3>
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
+        
+        {/* Nom */}
+        <div className="mb-3">
+          <label className="form-label">Nom</label>
+          <input 
+            type="text" 
+            className={`form-control ${errors.nom ? 'is-invalid' : ''}`} 
+            name="nom" 
+            value={updatedEquipement.nom} 
+            onChange={handleChange} 
+          />
+          {errors.nom && <div className="invalid-feedback">{errors.nom}</div>}
+        </div>
 
-      {/* Modèle */}
-      <div className="mb-3">
-        <label className="form-label">Modèle</label>
-        <input type="text" className="form-control" name="modele" placeholder="Modèle" value={updatedEquipement.modele} onChange={handleChange} />
-        {errors.modele && <p className="text-danger small">{errors.modele}</p>}
-      </div>
+        {/* Modèle */}
+        <div className="mb-3">
+          <label className="form-label">Modèle</label>
+          <select 
+            className={`form-control ${errors.modele ? 'is-invalid' : ''}`} 
+            name="modele" 
+            value={updatedEquipement.modele} 
+            onChange={handleChange}
+          >
+            <option value="">-- Sélectionner un modèle --</option>
+            <option value="nouveau">Nouveau</option>
+            <option value="ancien">Ancien</option>
+            <option value="refait">Refait</option>
+          </select>
+          {errors.modele && <div className="invalid-feedback">{errors.modele}</div>}
+        </div>
 
-      {/* Description */}
-      <div className="mb-3">
-        <label className="form-label">Description</label>
-        <textarea className="form-control" name="description" placeholder="Description" value={updatedEquipement.description} onChange={handleChange} />
-        {errors.description && <p className="text-danger small">{errors.description}</p>}
-      </div>
+        {/* Description */}
+        <div className="mb-3">
+          <label className="form-label">Description</label>
+          <textarea 
+            className={`form-control ${errors.description ? 'is-invalid' : ''}`} 
+            name="description" 
+            value={updatedEquipement.description} 
+            onChange={handleChange} 
+          />
+          {errors.description && <div className="invalid-feedback">{errors.description}</div>}
+        </div>
 
-      {/* ID du Laboratoire */}
-      <div className="mb-3">
-        <label className="form-label">ID du Laboratoire</label>
-        <input type="text" className="form-control" name="LaboratoryId" placeholder="ID du Laboratoire" value={updatedEquipement.LaboratoryId} onChange={handleChange} />
-        {errors.LaboratoryId && <p className="text-danger small">{errors.LaboratoryId}</p>}
-      </div>
+        {/* ID du laboratoire */}
+        <div className="mb-3">
+          <label className="form-label">ID du Laboratoire</label>
+          <input 
+            type="text" 
+            className={`form-control ${errors.LaboratoryId ? 'is-invalid' : ''}`} 
+            name="LaboratoryId" 
+            value={updatedEquipement.LaboratoryId} 
+            onChange={handleChange} 
+          />
+          {errors.LaboratoryId && <div className="invalid-feedback">{errors.LaboratoryId}</div>}
+        </div>
 
-      {/* Upload Image */}
-      <div className="mb-3">
-        <label className="form-label">Image</label>
-        <input type="file" className="form-control" name="image" accept="image/*" onChange={handleChange} />
-        {equipement.image && !imageUpdated && <p className="small text-muted">📷 Image actuelle : {equipement.image}</p>}
-      </div>
+        {/* Gérer l'upload d'image */}
+        <div className="mb-3">
+          <label className="form-label">Image</label>
+          <input 
+            type="file" 
+            className="form-control" 
+            name="image" 
+            accept="image/*" 
+            onChange={handleChange} 
+          />
+          {equipement.image && !imageUpdated && (
+            <p className="mt-2">📷 Image actuelle : <strong>{equipement.image}</strong></p>
+          )}
+        </div>
 
-      {newImage && (
-  <button 
-    type="button" 
-    className="btn btn-warning btn-sm mt-2 d-block mx-auto"
-    onClick={handleImageUpdate}
-  >
-    📷 Modifier l’image
-  </button>
-)}
-
-
-
-      {/* Boutons */}
-      <div className="d-flex justify-content-between">
-        <button type="submit" className="btn btn-primary btn-sm" disabled={loading}>
-          {loading ? "Mise à jour..." : "Mettre à jour"}
-        </button>
-        <button type="button" className="btn btn-secondary btn-sm" onClick={onClose}>Annuler</button>
-      </div>
-
-    </form>
-
-    {/* Bouton pour mettre à jour l'image séparément */}
-    {imageUpdated && (
-      <button onClick={handleImageUpdate} className="btn btn-info btn-sm mt-3 w-100">
-        📷 Mettre à jour l’image
-      </button>
-    )}
-  </div>
-</div>
-
+        {/* Boutons */}
+        <div className="d-flex justify-content-between">
+          <button type="submit" className="btn btn-success">
+            ✅ Mettre à jour
+          </button>
+          <button type="button" className="btn btn-danger" onClick={onClose}>
+            ❌ Annuler
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 

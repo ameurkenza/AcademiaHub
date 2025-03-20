@@ -1,10 +1,9 @@
-// src/redux/equipementSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const DOMAIN_URL = import.meta.env.VITE_API_URL;
 
-// ✅ Action pour récupérer les équipements (GET)
+// 1️⃣ Action pour récupérer les équipements (GET)
 export const fetchEquipements = createAsyncThunk(
   "equipements/fetchEquipements",
   async (_, { getState, rejectWithValue }) => {
@@ -23,13 +22,13 @@ export const fetchEquipements = createAsyncThunk(
   }
 );
 
-// ✅ Action pour créer un équipement (POST)
+// 2️⃣ Action pour créer un équipement (POST)
 export const createEquipement = createAsyncThunk(
   "equipements/createEquipement",
   async (newEquipement, { getState, rejectWithValue }) => {
     try {
       const token = getState().auth.token;
-      if (!token) throw new Error("Utilisateur non authentifié");
+      if (!token) throw new Error("Utilisateur non authentifié !");
 
       const response = await axios.post(`${DOMAIN_URL}/equipment`, newEquipement, {
         headers: {
@@ -45,56 +44,58 @@ export const createEquipement = createAsyncThunk(
   }
 );
 
-// ✅ Action pour mettre à jour les champs d'un équipement (PUT)
+// 3️⃣ Action pour mettre à jour un équipement (PUT)
 export const updateEquipement = createAsyncThunk(
   "equipements/updateEquipement",
   async ({ id, updatedData }, { getState, rejectWithValue }) => {
     try {
       const token = getState().auth.token;
-      if (!token) throw new Error("Utilisateur non authentifié");
+      if (!token) throw new Error("Utilisateur non authentifié !");
 
-      const response = await axios.put(`${DOMAIN_URL}/equipment/${id}`, updatedData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
+      console.log(`🔄 Mise à jour de l'équipement ${id} avec les données :`, updatedData);
+
+      // Vérifier si une nouvelle image a été ajoutée
+      const hasNewImage = updatedData.image && updatedData.image instanceof File;
+      let body = updatedData;
+      let headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json", // Par défaut en JSON
+      };
+
+      if (hasNewImage) {
+        body = new FormData();
+        for (const key in updatedData) {
+          if (updatedData[key] !== null && updatedData[key] !== undefined) {
+            body.append(key, updatedData[key]);
+          }
+        }
+        headers["Content-Type"] = "multipart/form-data"; // Passer en FormData si une image est incluse
+      }
+
+      // 🔹 Étape 1 : Mettre à jour l'équipement
+      await axios.put(`${DOMAIN_URL}/equipment/${id}`, body, { headers });
+
+      // 🔹 Étape 2 : Récupérer l'équipement mis à jour
+      const response = await axios.get(`${DOMAIN_URL}/equipment/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
       });
 
-      return { id, updatedData: response.data?.data };
+      console.log("✅ Équipement mis à jour (GET) :", response.data.data);
+      return { id, updatedData: response.data.data };
     } catch (error) {
+      console.error("❌ Erreur API :", error.response?.data || error.message);
       return rejectWithValue(error.response?.data?.message || "Erreur de mise à jour de l'équipement");
     }
   }
 );
 
-// ✅ Action pour mettre à jour l'image d'un équipement (PUT)
-export const updateEquipementImage = createAsyncThunk(
-  "equipements/updateEquipementImage",
-  async ({ id, formData, token }, { rejectWithValue }) => {
-    try {
-      const response = await axios.put(`${DOMAIN_URL}/equipment/${id}/image`, formData, {
-        headers: { 
-          Authorization: `Bearer ${token}`, 
-          "Content-Type": "multipart/form-data" 
-        },
-      });
-
-      return response.data; // ✅ Retourne la réponse du serveur
-    } catch (error) {
-      return rejectWithValue(error.response?.data?.message || "Erreur lors de la mise à jour de l'image");
-    }
-  }
-);
-
-  
-
-// ✅ Action pour supprimer un équipement (DELETE)
+// 4️⃣ Action pour supprimer un équipement (DELETE)
 export const deleteEquipement = createAsyncThunk(
   "equipements/deleteEquipement",
   async (id, { getState, rejectWithValue }) => {
     try {
       const token = getState().auth.token;
-      if (!token) throw new Error("Utilisateur non authentifié");
+      if (!token) throw new Error("Utilisateur non authentifié !");
 
       await axios.delete(`${DOMAIN_URL}/equipment/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -107,14 +108,14 @@ export const deleteEquipement = createAsyncThunk(
   }
 );
 
-// ✅ Création du slice Redux
-const equipementSlice = createSlice({
+// 5️⃣ Création du Slice Redux
+const equipementsSlice = createSlice({
   name: "equipements",
   initialState: { list: [], loading: false, error: null },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // 🔹 Gestion de la récupération des équipements
+      // ✅ Gestion du chargement des équipements
       .addCase(fetchEquipements.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -128,7 +129,7 @@ const equipementSlice = createSlice({
         state.error = action.payload;
       })
 
-      // 🔹 Gestion de la création d'un équipement
+      // ✅ Gestion de la création d'un équipement
       .addCase(createEquipement.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -142,42 +143,38 @@ const equipementSlice = createSlice({
         state.error = action.payload;
       })
 
-      // 🔹 Gestion de la mise à jour d'un équipement
+      // ✅ Gestion de la mise à jour d'un équipement
       .addCase(updateEquipement.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(updateEquipement.fulfilled, (state, action) => {
         state.loading = false;
+        console.log("✅ Données reçues par Redux après update :", action.payload);
+
         const { id, updatedData } = action.payload;
-        const index = state.list.findIndex((equip) => equip.id === id);
+        console.log("🔍 Vérification : updatedData reçu dans Redux :", updatedData);
+
+        const index = state.list.findIndex((equipement) => equipement.id === id);
         if (index !== -1) {
           state.list[index] = { ...state.list[index], ...updatedData };
         }
+
+        console.log("🎯 Équipement mis à jour dans Redux :", state.list);
       })
       .addCase(updateEquipement.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
 
-      // 🔹 Gestion de la mise à jour de l'image
-      .addCase(updateEquipementImage.fulfilled, (state, action) => {
-        const { id, imageUrl } = action.payload;  // ✅ Assurez-vous que l'API renvoie bien une URL d'image
-        const index = state.list.findIndex((equipement) => equipement.id === id);
-        if (index !== -1) {
-          state.list[index].image = imageUrl;  // ✅ Stocke uniquement l’URL de l’image
-        }
-      })
-      
-
-      // 🔹 Gestion de la suppression d'un équipement
+      // ✅ Gestion de la suppression d'un équipement
       .addCase(deleteEquipement.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(deleteEquipement.fulfilled, (state, action) => {
         state.loading = false;
-        state.list = state.list.filter((equip) => equip.id !== action.payload);
+        state.list = state.list.filter((equipement) => equipement.id !== action.payload);
       })
       .addCase(deleteEquipement.rejected, (state, action) => {
         state.loading = false;
@@ -186,5 +183,5 @@ const equipementSlice = createSlice({
   },
 });
 
-// ✅ Exportation du reducer
-export default equipementSlice.reducer;
+// ✅ Exportation du reducer pour le store Redux
+export default equipementsSlice.reducer;
