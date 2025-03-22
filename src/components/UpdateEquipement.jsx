@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { updateEquipement } from "../redux/EquipementSlice";
+import { updateEquipement, updateEquipementImage } from "../redux/EquipementSlice";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const UpdateEquipement = ({ equipement, onEquipementUpdated, onClose }) => {
@@ -12,11 +12,11 @@ const UpdateEquipement = ({ equipement, onEquipementUpdated, onClose }) => {
     modele: equipement.modele || "",
     description: equipement.description || "",
     LaboratoryId: equipement.LaboratoryId || "",
-    image: null, // Image sélectionnée (si modifiée)
   });
 
-  const [imageUpdated, setImageUpdated] = useState(false);
+  const [image, setImage] = useState(null);
   const [errors, setErrors] = useState({});
+  const [isUpdating, setIsUpdating] = useState(false);
 
   //  Validation du formulaire
   const validateForm = () => {
@@ -28,54 +28,67 @@ const UpdateEquipement = ({ equipement, onEquipementUpdated, onClose }) => {
     return formErrors;
   };
 
+  // 🔹 Gérer les changements de texte et de fichier
   const handleChange = (e) => {
     const { name, value, files } = e.target;
+
     if (name === "image" && files.length > 0) {
-      setUpdatedEquipement({ ...updatedEquipement, image: files[0] });
-      setImageUpdated(true);
+      console.log("📸 Image sélectionnée :", files[0]);
+      setImage(files[0]);
     } else {
       setUpdatedEquipement({ ...updatedEquipement, [name]: value });
     }
   };
 
+  // Soumission des données texte
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validation des erreurs avant l'envoi
+    // Vérifier les erreurs
     const formErrors = validateForm();
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
       return;
     }
 
-    // Création de l'objet FormData
-    const formData = new FormData();
-    formData.append("nom", updatedEquipement.nom);
-    formData.append("modele", updatedEquipement.modele);
-    formData.append("description", updatedEquipement.description);
-    formData.append("LaboratoryId", updatedEquipement.LaboratoryId);
+    setIsUpdating(true);
+    console.log(" Mise à jour des informations de l'équipement...");
 
-    // Ajouter l'image seulement si elle a été modifiée
-    if (imageUpdated && updatedEquipement.image) {
-      formData.append("image", updatedEquipement.image);
-    }
-
-    console.log("🚀 Données envoyées à Redux :", formData);
-
-    // Dispatch de la mise à jour avec Redux
-    dispatch(updateEquipement({ id: equipement.id, updatedData: formData })).then((action) => {
+    // Mettre à jour les champs texte
+    dispatch(updateEquipement({ id: equipement.id, updatedData: updatedEquipement })).then((action) => {
       if (action.payload) {
-        console.log("✅ Équipement mis à jour :", action.payload);
-        onEquipementUpdated(action.payload);
-        onClose();
+        console.log("Mise à jour réussie :", action.payload);
+        
+        // Si une image a été sélectionnée, mise à jour de l'image
+        if (image) {
+          console.log(" Envoi de l'image...");
+          const formData = new FormData();
+          formData.append("image", image);
+
+          dispatch(updateEquipementImage({ id: equipement.id, image })).then((imageAction) => {
+            if (imageAction.payload) {
+              console.log(" Image mise à jour :", imageAction.payload);
+              onEquipementUpdated(imageAction.payload);
+            } else {
+              console.error(" Erreur lors de la mise à jour de l'image.");
+            }
+            setIsUpdating(false);
+            onClose();
+          });
+        } else {
+          setIsUpdating(false);
+          onEquipementUpdated(action.payload);
+          onClose();
+        }
       } else {
-        console.error("❌ Erreur lors de la mise à jour.");
+        console.error(" Erreur lors de la mise à jour.");
+        setIsUpdating(false);
       }
     });
   };
 
   return (
-    <div className="container">
+    <div className="container p-4 border rounded bg-light">
       <h3 className="mb-4 text-center">✏️ Modifier un Équipement</h3>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         
@@ -134,7 +147,7 @@ const UpdateEquipement = ({ equipement, onEquipementUpdated, onClose }) => {
           {errors.LaboratoryId && <div className="invalid-feedback">{errors.LaboratoryId}</div>}
         </div>
 
-        {/* Gérer l'upload d'image */}
+        {/* Image */}
         <div className="mb-3">
           <label className="form-label">Image</label>
           <input 
@@ -144,18 +157,18 @@ const UpdateEquipement = ({ equipement, onEquipementUpdated, onClose }) => {
             accept="image/*" 
             onChange={handleChange} 
           />
-          {equipement.image && !imageUpdated && (
-            <p className="mt-2">📷 Image actuelle : <strong>{equipement.image}</strong></p>
+          {equipement.image && (
+            <p className="mt-2"> Image actuelle : <strong>{equipement.image}</strong></p>
           )}
         </div>
 
         {/* Boutons */}
         <div className="d-flex justify-content-between">
-          <button type="submit" className="btn btn-success">
-            ✅ Mettre à jour
+          <button type="submit" className="btn btn-success" disabled={isUpdating}>
+            {isUpdating ? "Mise à jour..." : " Mettre à jour"}
           </button>
           <button type="button" className="btn btn-danger" onClick={onClose}>
-            ❌ Annuler
+             Annuler
           </button>
         </div>
       </form>

@@ -6,8 +6,8 @@ const RoleManagement = () => {
   return (
     <div>
       <h1>⚙️ Gestion des Rôles</h1>
-      <CreateRole />  {/* ✅ Formulaire de création */}
-      <RoleList />  {/* ✅ Liste des rôles */}
+      <CreateRole />  {/*  Formulaire de création */}
+      <RoleList />  {/*  Liste des rôles */}
     </div>
   );
 };

@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 const ProtectedRoute = ({ children }) => {
   const { token } = useSelector((state) => state.auth);
   
-  console.log("🔍 Vérification du token :", token); // ✅ Debug : voir si Redux a un token
+  console.log("🔍 Vérification du token :", token); 
 
   return token ? children : <Navigate to="/login" replace />;
 };

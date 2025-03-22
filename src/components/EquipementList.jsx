@@ -77,7 +77,7 @@ const EquipementsList = () => {
                   className="btn btn-danger btn-sm ms-2"
                   onClick={() => handleDeleteEquipement(equipement.id)}
                 >
-                  🗑 Supprimer
+                  Supprimer
                 </button>
               </div>
             </div>

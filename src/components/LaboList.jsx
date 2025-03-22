@@ -6,7 +6,7 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const DOMAIN_URL = import.meta.env.VITE_API_URL;
-
+// Remplit les champs du formulaire d'édition avec les données du labo sélectionné
 const LaboList = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
@@ -59,7 +59,7 @@ const LaboList = () => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-
+//mise a jour de l,img
     if (imageUpdated && updatedLabo.image) {
       const formData = new FormData();
       formData.append("image", updatedLabo.image);
@@ -68,7 +68,7 @@ const LaboList = () => {
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" },
       });
     }
-
+//mise a jour des champs texte d'un lab
     const updatedTextData = {
       nom: updatedLabo.nom,
       salle: updatedLabo.salle,
@@ -82,7 +82,7 @@ const LaboList = () => {
       setSelectedLabo(null);
     });
   };
-
+//Supprimer un utilsiateur apres confirmation
   const handleDeleteLabo = (id) => {
     if (window.confirm("❗ Es-tu sûr de vouloir supprimer ce laboratoire ?")) {
       dispatch(deleteLabo(id)).then(() => {

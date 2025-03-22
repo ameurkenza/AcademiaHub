@@ -6,7 +6,7 @@ import { updateLabo } from "../redux/LaboSlice";
 const UpdateLabo = ({ labo, onLaboUpdated, onClose }) => {
   const dispatch = useDispatch();
 
-  // ✅ Stocker les informations mises à jour
+  //  Stocker les informations mises à jour
   const [updatedLabo, setUpdatedLabo] = useState({
     nom: labo.nom || "",
     salle: labo.salle || "",
@@ -15,10 +15,10 @@ const UpdateLabo = ({ labo, onLaboUpdated, onClose }) => {
     DepartmentId: labo.DepartmentId || "",
   });
 
-  const [imageUpdated, setImageUpdated] = useState(false); // ✅ Indicateur d'image modifiée
+  const [imageUpdated, setImageUpdated] = useState(false); 
   const [errors, setErrors] = useState({});
 
-  // ✅ Validation du formulaire
+  //  Validation du formulaire
   const validateForm = () => {
     let formErrors = {};
     if (!updatedLabo.nom) formErrors.nom = "Le nom est requis.";
@@ -32,7 +32,7 @@ const UpdateLabo = ({ labo, onLaboUpdated, onClose }) => {
     const { name, value, files } = e.target;
     if (name === "image" && files.length > 0) {
       setUpdatedLabo({ ...updatedLabo, image: files[0] });
-      setImageUpdated(true); // ✅ Marquer l'image comme modifiée
+      setImageUpdated(true); //  Marquer l'image comme modifiée
     } else {
       setUpdatedLabo({ ...updatedLabo, [name]: value });
     }
@@ -46,37 +46,37 @@ const UpdateLabo = ({ labo, onLaboUpdated, onClose }) => {
       return;
     }
 
-    // ✅ Préparation des données pour l'envoi
+    //  Préparation des données pour l'envoi
     const formData = new FormData();
     formData.append("nom", updatedLabo.nom);
     formData.append("salle", updatedLabo.salle);
     formData.append("information", updatedLabo.information);
     formData.append("DepartmentId", updatedLabo.DepartmentId);
     
-    // ✅ Ajouter l’image si elle a été modifiée
+    // Ajouter l’image si elle a été modifiée
     if (imageUpdated && updatedLabo.image) {
       formData.append("image", updatedLabo.image);
       formData.append("imageUpdated", "true"); // 🔹 Indiquer que l'image a changé
     }
 
-    console.log("📤 Données envoyées à Redux depuis UpdateLabo :", Object.fromEntries(formData.entries()));
+    console.log(" Données envoyées à Redux depuis UpdateLabo :", Object.fromEntries(formData.entries()));
 
 
-    // ✅ Dispatch Redux pour mise à jour
+    //  Dispatch Redux pour mise à jour
     dispatch(updateLabo({ id: labo.id, updatedData: formData })).then((action) => {
       if (action.payload) {
-        console.log("✅ Labo mis à jour :", action.payload);
+        console.log(" Labo mis à jour :", action.payload);
         onLaboUpdated(action.payload); // 🔄 Mise à jour immédiate de l'affichage
         onClose(); // 🔹 Fermer le formulaire après la mise à jour
       } else {
-        console.error("❌ Erreur : La mise à jour a échoué.");
+        console.error(" Erreur : La mise à jour a échoué.");
       }
     });
   };
 
   return (
     <div className="form-container">
-      <h3>✏️ Modifier un Laboratoire</h3>
+      <h3> Modifier un Laboratoire</h3>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <input type="text" name="nom" placeholder="Nom" value={updatedLabo.nom} onChange={handleChange} />
         {errors.nom && <p className="error">{errors.nom}</p>}
@@ -87,7 +87,7 @@ const UpdateLabo = ({ labo, onLaboUpdated, onClose }) => {
         <textarea name="information" placeholder="Informations" value={updatedLabo.information} onChange={handleChange} />
         {errors.information && <p className="error">{errors.information}</p>}
 
-        {/* ✅ Gérer l'upload d'image */}
+        {/*  Gérer l'upload d'image */}
         <input type="file" name="image" accept="image/*" onChange={handleChange} />
         {labo.image && !imageUpdated && <p>📷 Image actuelle : {labo.image}</p>}
 

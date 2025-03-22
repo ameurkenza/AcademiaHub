@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers, fetchUserById, deleteUser } from "../redux/userSlice";
-import UpdateUser from "./UpdateUser"; // ✅ Import du composant de mise à jour
+import UpdateUser from "./UpdateUser"; 
 import { updateUser, updateUserPhoto } from "../redux/userSlice"; // ✅ Import des actions Redux
 import { addUserRole, addUserSubject } from "../redux/userSlice";
 
@@ -27,7 +27,7 @@ const [showUpdateModal, setShowUpdateModal] = useState(false); // ✅ État pour
     dispatch(fetchUsers()); // Charger les utilisateurs
   }, [dispatch]);
 
-  // ✅ Ouvre la modale et charge les détails de l'utilisateur sélectionné
+  //  Ouvre la modale et charge les détails de l'utilisateur sélectionné
   const handleUserClick = (id) => {
     setSelectedUserId(id);
     dispatch(fetchUserById(id)); // Charge les détails
@@ -37,10 +37,10 @@ const [showUpdateModal, setShowUpdateModal] = useState(false); // ✅ État pour
   const handleDeleteUser = (id) => {
     if (window.confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?")) {
       dispatch(deleteUser(id));
-      closeModal(); // ✅ Ferme la modale après suppression
+      closeModal(); //  Ferme la modale après suppression
     }
   };
-  // ✅ Ajoute un rôle à l'utilisateur
+  //  Ajoute un rôle à l'utilisateur
   const handleAddRole = () => {
     const roleIds = prompt("Entrez les IDs des rôles à ajouter (séparés par des virgules) :")
       ?.split(",")
@@ -52,7 +52,7 @@ const [showUpdateModal, setShowUpdateModal] = useState(false); // ✅ État pour
     }
   };
 
-// ✅ Ajoute une matière à l'utilisateur
+//  Ajoute une matière à l'utilisateur
 const handleAddSubject = () => {
   const subjectIds = prompt("Entrez les IDs des matières à ajouter (séparés par des virgules) :")
     ?.split(",")
@@ -65,7 +65,7 @@ const handleAddSubject = () => {
 };
 
 
-  // ✅ Ferme la modale
+  //  Ferme la modale
   const closeModal = () => {
     setShowModal(false);
     setSelectedUserId(null);
@@ -94,7 +94,7 @@ const handleAddSubject = () => {
                   key={user.id}
                   className="list-group-item d-flex justify-content-between align-items-center"
                   style={{ cursor: "pointer" }}
-                  onClick={() => handleUserClick(user.id)} // ✅ Ouvre la modale
+                  onClick={() => handleUserClick(user.id)} 
                 >
                   <span className="fw-bold">{user.nom} {user.prenom}</span> 
                   <span className="text-muted">{user.email}</span>
@@ -105,7 +105,7 @@ const handleAddSubject = () => {
         </div>
       </div>
   
-      {/* ✅ Modale d'affichage des détails de l'utilisateur */}
+      {/*  Modale d'affichage des détails de l'utilisateur */}
       {showModal && (
         <div className="modal fade show d-block" tabIndex="-1" style={{ background: "rgba(0,0,0,0.5)" }}>
           <div className="modal-dialog">
@@ -119,7 +119,7 @@ const handleAddSubject = () => {
                   <p className="text-center text-muted">⏳ Chargement des détails...</p>
                 ) : selectedUser?.data ? (
                   <div>
-                    {/* ✅ Affichage de l'image */}
+                    {/*  Affichage de l'image */}
                     {selectedUser.data.photo ? (
                       <div className="text-center mb-3">
                         <img 
@@ -133,14 +133,14 @@ const handleAddSubject = () => {
                       <p>📷 Aucune image disponible</p>
                     )}
   
-                    {/* ✅ Informations personnelles */}
+                    {/*  Informations personnelles */}
                     <p><strong>Nom :</strong> {selectedUser.data.nom} {selectedUser.data.prenom}</p>
                     <p><strong>Email :</strong> {selectedUser.data.email}</p>
                     <p><strong>Date de naissance :</strong> {selectedUser.data.naissance}</p>
                     <p><strong>Biographie :</strong> {selectedUser.data.biographie}</p>
                     <p><strong>Conduite :</strong> {selectedUser.data.conduite}</p>
   
-                    {/* ✅ Département */}
+                    {/*  Département */}
                     {selectedUser.data.Department && (
                       <div className="mt-3">
                         <h6 className="text-primary">Département</h6>
@@ -150,14 +150,14 @@ const handleAddSubject = () => {
                       </div>
                     )}
   
-                    {/* ✅ Rôles */}
-                    {/* ✅ Rôles affichés correctement */}
+                    {/*  Rôles */}
+                  
 {selectedUser.data.Roles.length > 0 ? (
   <div className="mt-3">
     <h6 className="text-success">Rôles</h6>
     <ul className="list-group">
       {selectedUser.data.Roles.map((role, index) => (
-        <li key={index} className="list-group-item">{role.titre}</li> // ✅ Assure-toi d'afficher le bon champ
+        <li key={index} className="list-group-item">{role.titre}</li> 
       ))}
     </ul>
   </div>
@@ -185,18 +185,18 @@ const handleAddSubject = () => {
                 )}
               </div>
               <div className="modal-footer">
-                {/* 🟢 Bouton Ajouter un rôle */}
+                {/*  Bouton Ajouter un rôle */}
 <button className="btn btn-info" onClick={handleAddRole}>
-  ➕ Ajouter Rôle
+  Ajouter Rôle
 </button>
 
-{/* 🟣 Bouton Ajouter une matière */}
+{/*  Bouton Ajouter une matière */}
 <button className="btn btn-success" onClick={handleAddSubject}>
-  ➕ Ajouter Matière
+   Ajouter Matière
 </button>
 
 
-                {/* 🗑️ Bouton Supprimer */}
+                {/*  Bouton Supprimer */}
                 <button 
                   className="btn btn-danger"
                   onClick={() => handleDeleteUser(selectedUserId)}
@@ -204,15 +204,15 @@ const handleAddSubject = () => {
                   Supprimer
                 </button>
   
-                {/* 📝 Bouton Modifier */}
+                {/* Bouton Modifier */}
                 <button 
                   className="btn btn-warning"
                   onClick={() => setShowUpdateModal(true)}
                 >
-                  ✏️ Modifier
+                   Modifier
                 </button>
   
-                {/* ❌ Bouton Fermer */}
+                {/*  Bouton Fermer */}
                 <button 
                   className="btn btn-secondary"
                   onClick={closeModal}
@@ -225,7 +225,7 @@ const handleAddSubject = () => {
         </div>
       )}
   
-      {/* ✅ Modale de mise à jour de l'utilisateur */}
+      {/*  Modale de mise à jour de l'utilisateur */}
       {showUpdateModal && selectedUser?.data && (
         <UpdateUser 
           user={selectedUser.data} 

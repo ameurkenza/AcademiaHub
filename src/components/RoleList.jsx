@@ -6,12 +6,12 @@ const RoleList = () => {
   const dispatch = useDispatch();
   const { list: roles, loading, error } = useSelector((state) => state.roles);
 
-  // ✅ Charger la liste des rôles au chargement du composant
+  //  Charger la liste des rôles au chargement du composant
   useEffect(() => {
     dispatch(fetchRoles());
   }, [dispatch]);
 
-  // ✅ Fonction pour supprimer un rôle
+  // Fonction pour supprimer un rôle
   const handleDelete = (id) => {
     if (window.confirm("Voulez-vous vraiment supprimer ce rôle ?")) {
       dispatch(deleteRole(id));
@@ -26,11 +26,11 @@ const RoleList = () => {
     </div>
 
     <div className="card-body">
-      {/* ✅ Gestion du chargement et des erreurs */}
+      {/* Gestion du chargement et des erreurs */}
       {loading && <p className="text-center text-muted">⏳ Chargement des rôles...</p>}
-      {error && <p className="alert alert-danger">❌ {error}</p>}
+      {error && <p className="alert alert-danger"> {error}</p>}
 
-      {/* ✅ Affichage des rôles */}
+      {/*  Affichage des rôles */}
       {!loading && !error && roles.length === 0 && (
         <p className="text-center text-muted">Aucun rôle disponible.</p>
       )}

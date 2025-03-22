@@ -1,14 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios"; // ✅ Import d'Axios
+import axios from "axios"; 
 
-const DOMAIN_URL = import.meta.env.VITE_API_URL; // ✅ Récupération de l'URL de l'API
-
-// 🎯 Récupération de la liste des utilisateurs
+const DOMAIN_URL = import.meta.env.VITE_API_URL; 
+//  Récupération de la liste des utilisateurs
 export const fetchUsers = createAsyncThunk(
   "users/fetchUsers",
   async (_, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem("token"); // ✅ Récupère le token du localStorage
+      const token = localStorage.getItem("token"); 
       if (!token) throw new Error("Aucun token trouvé. Veuillez vous reconnecter.");
 
       console.log("🔍 URL utilisée :", `${DOMAIN_URL}/users`);
@@ -17,16 +16,16 @@ export const fetchUsers = createAsyncThunk(
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      console.log("✅ Utilisateurs récupérés :", response.data);
+      console.log("Utilisateurs récupérés :", response.data);
       return response.data.data.users;
     } catch (error) {
-      console.error("❌ Erreur lors de la récupération des utilisateurs :", error);
+      console.error(" Erreur lors de la récupération des utilisateurs :", error);
       return rejectWithValue(error.response?.data?.message || "Erreur lors du chargement des utilisateurs");
     }
   }
 );
 
-// 🎯 Récupération des détails d'un utilisateur
+//  Récupération des détails d'un utilisateur
 export const fetchUserById = createAsyncThunk(
   "users/fetchUserById",
   async (id, { rejectWithValue }) => {
@@ -34,13 +33,13 @@ export const fetchUserById = createAsyncThunk(
       const token = localStorage.getItem("token");
       if (!token) throw new Error("Aucun token trouvé. Veuillez vous reconnecter.");
 
-      console.log("🔍 URL utilisée :", `${DOMAIN_URL}/users/${id}`);
+      console.log(" URL utilisée :", `${DOMAIN_URL}/users/${id}`);
 
       const response = await axios.get(`${DOMAIN_URL}/users/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      console.log("✅ Réponse complète de fetchUserById :", response.data);
+      console.log("Réponse complète de fetchUserById :", response.data);
 
       if (!response.data || !response.data.data) {
         throw new Error("Données utilisateur invalides reçues.");
@@ -48,14 +47,14 @@ export const fetchUserById = createAsyncThunk(
 
       return response.data; 
     } catch (error) {
-      console.error("❌ Erreur lors de la récupération des détails de l'utilisateur :", error);
+      console.error(" Erreur lors de la récupération des détails de l'utilisateur :", error);
       return rejectWithValue(error.response?.data?.message || "Erreur lors du chargement des détails de l'utilisateur");
     }
   }
 );
 
 
-// 🎯 Suppression d'un utilisateur
+//  Suppression d'un utilisateur
 export const deleteUser = createAsyncThunk(
   "users/deleteUser",
   async (id, { rejectWithValue, dispatch }) => {
@@ -69,19 +68,19 @@ export const deleteUser = createAsyncThunk(
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      console.log("✅ Utilisateur supprimé :", response.data);
+      console.log("Utilisateur supprimé :", response.data);
 
-      dispatch(fetchUsers()); // ✅ Rafraîchir la liste
+      dispatch(fetchUsers()); 
 
       return id; // Retourne l'ID supprimé pour mise à jour du state
     } catch (error) {
-      console.error("❌ Erreur lors de la suppression de l'utilisateur :", error);
+      console.error("Erreur lors de la suppression de l'utilisateur :", error);
       return rejectWithValue(error.response?.data?.message || "Erreur lors de la suppression");
     }
   }
 );
 
-// 🎯 Mise à jour des informations de l'utilisateur
+//  Mise à jour des informations de l'utilisateur
 export const updateUser = createAsyncThunk(
   "users/updateUser",
   async ({ id, userData }, { rejectWithValue, dispatch }) => {
@@ -89,7 +88,7 @@ export const updateUser = createAsyncThunk(
       const token = localStorage.getItem("token");
       if (!token) throw new Error("Aucun token trouvé. Veuillez vous reconnecter.");
 
-      console.log("🔄 Mise à jour de l'utilisateur ID :", id);
+      console.log(" Mise à jour de l'utilisateur ID :", id);
 
       const response = await axios.put(`${DOMAIN_URL}/users/${id}`, userData, {
         headers: { 
@@ -98,18 +97,18 @@ export const updateUser = createAsyncThunk(
         },
       });
 
-      console.log("✅ Utilisateur mis à jour :", response.data);
+      console.log(" Utilisateur mis à jour :", response.data);
 
-      dispatch(fetchUsers()); // ✅ Rafraîchir la liste
+      dispatch(fetchUsers()); 
       return response.data.data;
     } catch (error) {
-      console.error("❌ Erreur lors de la mise à jour de l'utilisateur :", error);
+      console.error(" Erreur lors de la mise à jour de l'utilisateur :", error);
       return rejectWithValue(error.response?.data?.message || "Erreur lors de la mise à jour");
     }
   }
 );
 
-// 🎯 Mise à jour de la photo de l'utilisateur
+// Mise à jour de la photo de l'utilisateur
 export const updateUserPhoto = createAsyncThunk(
   "users/updateUserPhoto",
   async ({ id, photoFile }, { rejectWithValue, dispatch }) => {
@@ -129,12 +128,12 @@ export const updateUserPhoto = createAsyncThunk(
         },
       });
 
-      console.log("✅ Photo mise à jour :", response.data);
+      console.log(" Photo mise à jour :", response.data);
 
-      dispatch(fetchUsers()); // ✅ Rafraîchir la liste
+      dispatch(fetchUsers()); 
       return response.data.data;
     } catch (error) {
-      console.error("❌ Erreur lors de la mise à jour de la photo :", error);
+      console.error(" Erreur lors de la mise à jour de la photo :", error);
       return rejectWithValue(error.response?.data?.message || "Erreur lors de la mise à jour de la photo");
     }
   }
@@ -148,11 +147,11 @@ export const addUserRole = createAsyncThunk(
       const token = localStorage.getItem("token");
       if (!token) throw new Error("Aucun token trouvé. Veuillez vous reconnecter.");
 
-      console.log("🎯 Ajout des rôles", roleIds, "à l'utilisateur :", id);
+      console.log(" Ajout des rôles", roleIds, "à l'utilisateur :", id);
 
       const response = await axios.post(
         `${DOMAIN_URL}/users/${id}/roles`,
-        { ids: roleIds }, // ✅ Respecte le format attendu { "ids": [1,2] }
+        { ids: roleIds }, 
         {
           headers: { 
             Authorization: `Bearer ${token}`,
@@ -161,12 +160,12 @@ export const addUserRole = createAsyncThunk(
         }
       );
 
-      console.log("✅ Rôles ajoutés avec succès :", response.data);
+      console.log("Rôles ajoutés avec succès :", response.data);
 
-      dispatch(fetchUserById(id)); // ✅ Rafraîchir les détails de l'utilisateur
+      dispatch(fetchUserById(id)); 
       return response.data;
     } catch (error) {
-      console.error("❌ Erreur lors de l'ajout des rôles :", error);
+      console.error(" Erreur lors de l'ajout des rôles :", error);
       return rejectWithValue(error.response?.data?.message || "Erreur lors de l'ajout des rôles");
     }
   }
@@ -181,11 +180,11 @@ export const addUserSubject = createAsyncThunk(
       const token = localStorage.getItem("token");
       if (!token) throw new Error("Aucun token trouvé. Veuillez vous reconnecter.");
 
-      console.log("🎯 Ajout des matières", subjectIds, "à l'utilisateur :", id);
+      console.log("Ajout des matières", subjectIds, "à l'utilisateur :", id);
 
       const response = await axios.post(
         `${DOMAIN_URL}/users/${id}/subjects`,
-        { ids: subjectIds }, // ✅ Respecte le format attendu { "ids": [1] }
+        { ids: subjectIds }, 
         {
           headers: { 
             Authorization: `Bearer ${token}`,
@@ -194,18 +193,18 @@ export const addUserSubject = createAsyncThunk(
         }
       );
 
-      console.log("✅ Matières ajoutées avec succès :", response.data);
+      console.log(" Matières ajoutées avec succès :", response.data);
 
-      dispatch(fetchUserById(id)); // ✅ Rafraîchir les détails de l'utilisateur
+      dispatch(fetchUserById(id)); // Rafraîchir les détails de l'utilisateur
       return response.data;
     } catch (error) {
-      console.error("❌ Erreur lors de l'ajout des matières :", error);
+      console.error(" Erreur lors de l'ajout des matières :", error);
       return rejectWithValue(error.response?.data?.message || "Erreur lors de l'ajout des matières");
     }
   }
 );
 
-// 🎯 Création d'un utilisateur
+//  Création d'un utilisateur
 export const createUser = createAsyncThunk(
   "users/createUser",
   async (userData, { rejectWithValue }) => {
@@ -214,13 +213,13 @@ export const createUser = createAsyncThunk(
 
       const response = await axios.post(`${DOMAIN_URL}/users`, userData, {
         headers: {
-          "Content-Type": "multipart/form-data", // ✅ Corrige le type de contenu
+          "Content-Type": "multipart/form-data", 
         },
       });
 
       return response.data;
     } catch (error) {
-      console.error("❌ Erreur lors de la création de l'utilisateur :", error);
+      console.error(" Erreur lors de la création de l'utilisateur :", error);
       console.log("Réponse de l'API :", error.response?.data);
       return rejectWithValue(error.response?.data?.message || "Erreur lors de la création de l'utilisateur");
     }
@@ -231,7 +230,7 @@ export const createUser = createAsyncThunk(
 
 
 
-// ✅ Création du slice
+// Création du slice
 const userSlice = createSlice({
   name: "users",
   initialState: {
@@ -300,7 +299,7 @@ const userSlice = createSlice({
       .addCase(addUserRole.fulfilled, (state, action) => {
         state.loading = false;
         if (state.selectedUser && state.selectedUser.data) {
-          state.selectedUser.data.Roles = action.payload.data.Roles; // ✅ Met à jour les rôles de l'utilisateur
+          state.selectedUser.data.Roles = action.payload.data.Roles; 
         }
       })
       .addCase(addUserRole.rejected, (state, action) => {
@@ -314,7 +313,7 @@ const userSlice = createSlice({
       .addCase(addUserSubject.fulfilled, (state, action) => {
         state.loading = false;
         if (state.selectedUser && state.selectedUser.data) {
-          state.selectedUser.data.Subjects = action.payload.data.Subjects; // ✅ Met à jour les matières de l'utilisateur
+          state.selectedUser.data.Subjects = action.payload.data.Subjects; 
         }
       })
       .addCase(addUserSubject.rejected, (state, action) => {
@@ -326,7 +325,7 @@ const userSlice = createSlice({
       })
       .addCase(createUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.users.push(action.payload); // ✅ Ajoute le nouvel utilisateur à la liste
+        state.users.push(action.payload); 
       })
       .addCase(createUser.rejected, (state, action) => {
         state.loading = false;

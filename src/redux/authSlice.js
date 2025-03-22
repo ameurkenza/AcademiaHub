@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const DOMAIN_URL = import.meta.env.VITE_API_URL; // ✅ Met à jour ici !
+const DOMAIN_URL = import.meta.env.VITE_API_URL; 
 
 
-// 🎯 Action asynchrone pour la connexion
+//  Action asynchrone pour la connexion
 export const loginUser = createAsyncThunk(
     'auth/loginUser',
     async ({ email, motDePasse }, { rejectWithValue }) => {
@@ -14,7 +14,7 @@ export const loginUser = createAsyncThunk(
           mot_de_passe: motDePasse,
         });
   
-        console.log("✅ Connexion réussie :", response.data); // Ajout du log ici ✅
+        console.log("Connexion réussie :", response.data); // Ajout du log ici ✅
   
         // Stocker le token dans localStorage
         localStorage.setItem('token', response.data.token);
@@ -28,7 +28,7 @@ export const loginUser = createAsyncThunk(
   );
   
 
-// 🎯 Reducer pour gérer l'état d'authentification
+//  Reducer pour gérer l'état d'authentification
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
@@ -39,7 +39,7 @@ const authSlice = createSlice({
   },
   reducers: {
     logout: (state) => {
-      localStorage.removeItem('token'); // Supprimer le token
+      localStorage.removeItem('token'); 
       state.user = null;
       state.token = null;
     },

@@ -4,10 +4,10 @@ import axios from "axios";
 const DOMAIN_URL = import.meta.env.VITE_API_URL;
 const ROLE_URL = `${DOMAIN_URL}/roles`;
 
-// ✅ Récupérer le token depuis Redux
+//  Récupérer le token depuis Redux
 const getToken = (getState) => getState().auth.token;
 
-// ✅ Récupérer tous les rôles (GET)
+//  Récupérer tous les rôles (GET)
 export const fetchRoles = createAsyncThunk(
   "roles/fetchRoles",
   async (_, { getState, rejectWithValue }) => {
@@ -26,7 +26,7 @@ export const fetchRoles = createAsyncThunk(
   }
 );
 
-// ✅ Supprimer un rôle (DELETE)
+//  Supprimer un rôle (DELETE)
 export const deleteRole = createAsyncThunk(
   "roles/deleteRole",
   async (id, { getState, rejectWithValue }) => {
@@ -45,7 +45,7 @@ export const deleteRole = createAsyncThunk(
   }
 );
 
-// 🎯 **Création du Slice**
+//  **Création du Slice**
 const roleSlice = createSlice({
   name: "roles",
   initialState: { list: [], loading: false, error: null },
@@ -70,5 +70,5 @@ const roleSlice = createSlice({
   },
 });
 
-// ✅ Export du reducer
+//  Export du reducer
 export default roleSlice.reducer;

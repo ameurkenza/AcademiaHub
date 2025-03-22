@@ -5,19 +5,19 @@ import { createRole } from "../redux/roleSlice";
 const CreateRole = () => {
   const dispatch = useDispatch();
 
-  // ✅ États pour stocker les valeurs du formulaire
+  //  États pour stocker les valeurs du formulaire
   const [newRole, setNewRole] = useState({
     titre: "",
     description: "",
   });
 
-  // ✅ Gestion des inputs
+  // gestion des inputs
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewRole({ ...newRole, [name]: value });
   };
 
-  // ✅ Soumission du formulaire
+  //  Soumission du formulaire
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!newRole.titre || !newRole.description) {
@@ -25,12 +25,12 @@ const CreateRole = () => {
       return;
     }
     dispatch(createRole(newRole));
-    setNewRole({ titre: "", description: "" }); // 🔄 Réinitialisation du formulaire
+    setNewRole({ titre: "", description: "" }); // Réinitialisation du formulaire
   };
 
   return (
     <div className="form-container">
-      <h3>➕ Ajouter un Rôle</h3>
+      <h3> Ajouter un Rôle</h3>
       <form onSubmit={handleSubmit}>
         <input
           type="text"

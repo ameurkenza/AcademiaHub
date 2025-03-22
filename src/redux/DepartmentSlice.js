@@ -1,9 +1,10 @@
+// src/redux/departmentSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const DOMAIN_URL = import.meta.env.VITE_API_URL;
 
-// ✅ Action pour récupérer les départements
+// ✅ Récupérer la liste des départements
 export const fetchDepartments = createAsyncThunk(
   "departments/fetchDepartments",
   async (_, { getState, rejectWithValue }) => {
@@ -22,7 +23,7 @@ export const fetchDepartments = createAsyncThunk(
   }
 );
 
-// ✅ Action pour supprimer un département
+// Supprimer un département
 export const deleteDepartment = createAsyncThunk(
   "departments/deleteDepartment",
   async (deptId, { getState, rejectWithValue }) => {
@@ -34,7 +35,6 @@ export const deleteDepartment = createAsyncThunk(
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      console.log(`✅ Département supprimé (ID: ${deptId})`);
       return deptId;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Erreur suppression");
@@ -42,7 +42,7 @@ export const deleteDepartment = createAsyncThunk(
   }
 );
 
-// ✅ Action pour créer un département
+// Créer un département
 export const createDepartment = createAsyncThunk(
   "departments/createDepartment",
   async (newDepartment, { getState, rejectWithValue }) => {
@@ -50,6 +50,8 @@ export const createDepartment = createAsyncThunk(
       const token = getState().auth.token;
       if (!token) throw new Error("Utilisateur non authentifié !");
 
+      // On envoie le "newDepartment" (champs texte) en JSON,
+      // comme tu le fais déjà.
       const response = await axios.post(`${DOMAIN_URL}/departments`, newDepartment, {
         headers: { 
           Authorization: `Bearer ${token}`,
@@ -57,14 +59,18 @@ export const createDepartment = createAsyncThunk(
         },
       });
 
-      return response.data?.data?.department || response.data; 
+      // Le backend renvoie : { message: "Departement cree", data: { ... } }
+      // On retourne l'objet { id, nom, histoire, ... }
+      // =========================== CHANGÉ ICI ==============================
+      return response.data?.data || response.data;
+      // ====================================================================
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Erreur de création");
     }
   }
 );
 
-// ✅ Action pour mettre à jour un département
+// Mettre à jour un département
 export const updateDepartment = createAsyncThunk(
   "departments/updateDepartment",
   async ({ id, updatedData }, { getState, rejectWithValue }) => {
@@ -72,6 +78,8 @@ export const updateDepartment = createAsyncThunk(
       const token = getState().auth.token;
       if (!token) throw new Error("Utilisateur non authentifié !");
 
+      // Ici, on met à jour UNIQUEMENT les champs texte,
+      // car l’image est gérée séparément par un PUT /departments/:id/image
       const response = await axios.put(`${DOMAIN_URL}/departments/${id}`, updatedData, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -86,7 +94,7 @@ export const updateDepartment = createAsyncThunk(
   }
 );
 
-// ✅ Création du Slice Redux
+//  Slice Redux
 const departmentSlice = createSlice({
   name: "departments",
   initialState: {
@@ -97,6 +105,7 @@ const departmentSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // Récupérer liste
       .addCase(fetchDepartments.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -109,23 +118,34 @@ const departmentSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      // ✅ Suppression d’un département
+
+      // Supprimer
       .addCase(deleteDepartment.fulfilled, (state, action) => {
-        state.list = state.list.filter((dept) => dept.id !== action.payload);
+        const deptId = action.payload;
+        state.list = state.list.filter((dept) => dept.id !== deptId);
       })
-      // ✅ Création d’un département
+
+      // Créer
       .addCase(createDepartment.fulfilled, (state, action) => {
-        state.list.push(action.payload);
+        // action.payload doit être l'objet du nouveau département
+        // ex: { id: 8, nom: "Sante", ... }
+        const newDept = action.payload;
+        state.list.push(newDept);
       })
-      // ✅ Mise à jour d’un département
+
+      // Mettre à jour
       .addCase(updateDepartment.fulfilled, (state, action) => {
-        const updatedDept = action.payload; // ✅ Récupère les nouvelles données du département
-        state.list = state.list.map((dept) =>
+        const updatedDept = action.payload; 
+        // Dans ton backend, tu renvoies (ou pas) l'objet complet ?
+        // S’il n’y a pas l’objet complet, il faut juste rafraîchir la liste
+        // Pour l’exemple, on fait comme si on récupérait l’objet complet
+        if (updatedDept && updatedDept.id) {
+          state.list = state.list.map((dept) =>
             dept.id === updatedDept.id ? updatedDept : dept
-        );
-    });    
+          );
+        }
+      });
   },
 });
 
-// ✅ Exportation correcte
 export default departmentSlice.reducer;

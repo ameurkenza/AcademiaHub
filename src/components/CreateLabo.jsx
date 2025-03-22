@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createLabo, fetchLabos } from "../redux/LaboSlice";
-
+// Composant pour créer un nouveau laboratoire
 const CreateLabo = ({ onLaboCreated }) => {
   const dispatch = useDispatch();
+  // État local pour les données du laboratoire à créer
   const [newLabo, setNewLabo] = useState({
     nom: "",
     salle: "",
@@ -11,9 +12,9 @@ const CreateLabo = ({ onLaboCreated }) => {
     image: null,
     DepartmentId: "",
   });
-
+// État pour les erreurs de validation
   const [errors, setErrors] = useState({});
-
+// Fonction de validation du formulaire
   const validateForm = () => {
     let formErrors = {};
     if (!newLabo.nom) formErrors.nom = "Le nom est requis.";
@@ -22,7 +23,7 @@ const CreateLabo = ({ onLaboCreated }) => {
     if (!newLabo.DepartmentId) formErrors.DepartmentId = "Le département est requis.";
     return formErrors;
   };
-
+ // Gestionnaire de changement pour les champs du formulaire
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "image" && files.length > 0) {
@@ -40,21 +41,21 @@ const CreateLabo = ({ onLaboCreated }) => {
       setErrors(formErrors);
       return;
     }
-
+// Préparation des données à envoyer via FormData
     const formData = new FormData();
     formData.append("nom", newLabo.nom);
     formData.append("salle", newLabo.salle);
     formData.append("information", newLabo.information);
     if (newLabo.image) formData.append("image", newLabo.image);
     formData.append("DepartmentId", newLabo.DepartmentId);
-
+// Envoi de la requête de création et rafraîchissement de la liste
     dispatch(createLabo(formData)).then((action) => {
       if (action.payload && action.payload.message === "Lab cree") {
         dispatch(fetchLabos()); 
         if (onLaboCreated) onLaboCreated(action.payload);
       }
     });
-
+// Réinitialisation du formulaire après soumission
     setNewLabo({ nom: "", salle: "", information: "", image: null, DepartmentId: "" });
     setErrors({});
   };

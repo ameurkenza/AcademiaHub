@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createEquipement, fetchEquipements } from "../redux/EquipementSlice";
-
+ 
+// Composant pour créer un nouvel équipement
 const CreateEquipement = ({ onEquipementCreated }) => {
   const dispatch = useDispatch();
   const [newEquipement, setNewEquipement] = useState({
@@ -11,7 +12,7 @@ const CreateEquipement = ({ onEquipementCreated }) => {
     image: null,
     LaboratoryId: "",
   });
-
+//stockage des erreurs de validations
   const [errors, setErrors] = useState({});
 
   const validateForm = () => {
@@ -22,7 +23,7 @@ const CreateEquipement = ({ onEquipementCreated }) => {
     if (!newEquipement.LaboratoryId) formErrors.LaboratoryId = "L'ID du laboratoire est requis.";
     return formErrors;
   };
-
+//Gestionnnaire des champs du formualire
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "image" && files.length > 0) {
@@ -31,7 +32,7 @@ const CreateEquipement = ({ onEquipementCreated }) => {
       setNewEquipement({ ...newEquipement, [name]: value });
     }
   };
-
+//Soumission du formulaire
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -40,21 +41,21 @@ const CreateEquipement = ({ onEquipementCreated }) => {
       setErrors(formErrors);
       return;
     }
-
+//creation d,Un objet pour envoyer les donnees multipart
     const formData = new FormData();
     formData.append("nom", newEquipement.nom);
     formData.append("modele", newEquipement.modele);
     formData.append("description", newEquipement.description);
     if (newEquipement.image) formData.append("image", newEquipement.image);
     formData.append("LaboratoryId", newEquipement.LaboratoryId);
-
+//requete de creation et de msie ajour de liste
     dispatch(createEquipement(formData)).then((action) => {
       if (action.payload) {
         dispatch(fetchEquipements());
         if (onEquipementCreated) onEquipementCreated(action.payload);
       }
     });
-
+//Reinitialisation du formulaire
     setNewEquipement({ nom: "", modele: "", description: "", image: null, LaboratoryId: "" });
     setErrors({});
   };

@@ -15,24 +15,24 @@ const UpdateUser = ({ user, onClose }) => {
 
   const [photo, setPhoto] = useState(null);
 
-  // 🎯 Gestion des changements de texte
+  //  Gestion des changements de texte
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // 🎯 Gestion du fichier photo
+  //  Gestion du fichier photo
   const handlePhotoChange = (e) => {
     setPhoto(e.target.files[0]);
   };
 
-  // 🎯 Soumettre les modifications
+  //  Soumettre les modifications
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateUser({ id: user.id, userData: formData }));
     if (photo) {
       dispatch(updateUserPhoto({ id: user.id, photoFile: photo }));
     }
-    onClose(); // ✅ Fermer la modale après soumission
+    onClose(); 
   };
 
   return (
